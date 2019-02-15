@@ -30,6 +30,8 @@ __pycache__/
 .Python
 env/
 build/
+docs/
+src/
 develop-eggs/
 dist/
 downloads/
@@ -43,6 +45,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.mypy_cache
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -93,7 +96,7 @@ target/
 .python-version
 
 # celery beat schedule file
-celerybeat-schedule 
+celerybeat-schedule
 # dotenv
 .env
 

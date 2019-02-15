@@ -179,7 +179,9 @@ print(b)
 if torch.cuda.is_available():
     device = torch.device("cuda")          # a CUDA device object
     y = torch.ones_like(x, device=device)  # directly create a tensor on GPU
-    x = x.to(device)                       # or just use strings ``.to("cuda")``
+    # or just use strings ``.to("cuda")``
+    x = x.to(device)
     z = x + y
     print(z)
-    print(z.to("cpu", torch.double))       # ``.to`` can also change dtype together!
+    # ``.to`` can also change dtype together!
+    print(z.to("cpu", torch.double))

@@ -9,7 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: python version
+    - name: python version set
+      run: alias python=python3
+    - name: get python version
       run: python --version
     - name: Install Sphinx
       run: sudo apt-get install python3-sphinx

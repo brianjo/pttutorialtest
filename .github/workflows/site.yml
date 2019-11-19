@@ -17,8 +17,8 @@ jobs:
       run: python --version
     - name: Install Sphinx
       run: sudo apt-get install python3-sphinx
-    - name: Run pip install
-      run: pip install -r requirements.txt
+    - name: Run pip3 install
+      run: pipe install -r requirements.txt
     - name: Run the build
       run: make html
 

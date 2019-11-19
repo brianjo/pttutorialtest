@@ -13,7 +13,6 @@ jobs:
       run: echo Hello, world!
     - name: Run a multi-line script
       run: 
-        pip install -r requirements.txt
+        pip install -r requirements.txt,
         make html
-        echo Add other actions to build,
-        echo test, and deploy your project.
+

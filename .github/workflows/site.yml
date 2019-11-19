@@ -9,6 +9,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: install python3
+      run: sudo apt-get install python3
     - name: python version set
       run: alias python=python3
     - name: get python version

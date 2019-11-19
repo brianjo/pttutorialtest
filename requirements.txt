@@ -1,7 +1,6 @@
 # Refer to ./jenkins/build.sh for tutorial build instructions 
 
 sphinx
-# sphinx
 sphinx-gallery==0.3.1
 tqdm
 numpy

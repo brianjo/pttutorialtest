@@ -25,7 +25,7 @@ jobs:
     - name: Check env
       run: echo `which spinx-build`
     - name: Build the docset
-      run: make html-noplot
+      run: make docs
       
       id: build
     - name: Get output time

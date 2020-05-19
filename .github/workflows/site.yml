@@ -23,13 +23,12 @@ jobs:
         python3 -m pip install katex
         python3 -m pip install sphinxcontrib.katex
     - name: Check env
-      run: echo `which spinx-build`
+      run: |
+      - echo `which spinx-build`
+      - pwd
     - name: Build the docset
-      run: make html
-      
-      id: build
-    - name: Get output time
-      run: echo "The time was ${{ steps.build.outputs.time }}"      
+      run: make docs
+      id: build     
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:

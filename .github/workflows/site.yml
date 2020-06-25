@@ -12,23 +12,10 @@ jobs:
     - name: Dependencies
       run: |
         echo `python3 --version`
-        sudo apt-get install -y python-setuptools
-        sudo apt-get install -y python3-sphinx
-        python3 -m pip install --upgrade pip
-        python3 -m pip install setuptools
-        python3 -m pip install torch
-        python3 -m pip install -e git+git://github.com/pytorch/pytorch_sphinx_theme.git#egg=pytorch_sphinx_theme
-        python3 -m pip install sphinx-gallery
-        python3 -m pip install recommonmark
-        python3 -m pip install katex
-        python3 -m pip install sphinxcontrib.katex
-    - name: Check env
-      run: |
-        echo `which spinx-build`
-        pwd
-        ls
+        sudo apt-get install -y python3-setuptools
+        pip3 install -r requirements.txt
     - name: Build the docset
-      run: make docs
+      run: make html
       id: build     
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -36,4 +23,3 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: _build/html # The folder the action should deploy. 
-

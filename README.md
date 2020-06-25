@@ -43,5 +43,5 @@ ends up being beginner/example_tutorial.html you can see the results below.
 
 https://brianjo.github.io/pttutorialtest/beginner/example_tutorial.html
 
-Note that any new tutorial you're testing needs to end with _tutoril.py for it to
+Note that any new tutorial you're testing needs to end with _tutorial.py for it to
 be built. 

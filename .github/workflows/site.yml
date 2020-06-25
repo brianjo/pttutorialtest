@@ -16,7 +16,7 @@ jobs:
         pip3 install wheel
         pip3 install -r requirements.txt
     - name: Build the docset
-      run: make docs
+      run: make html
       id: build     
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3

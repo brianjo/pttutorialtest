@@ -6,7 +6,7 @@ export LC_ALL=C
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = python3 -msphinx
 SPHINXPROJ    = PyTorchTutorials
 SOURCEDIR     = .
 BUILDDIR      = _build

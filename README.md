@@ -35,7 +35,7 @@ As an alternatie to building locally you can do the following.
 
 There's a GitHub action that will build the site and put the results 
 in your forks github-pages branch. You can then look
-at the site at https://<username>.github.io/pttutorialtest/
+at the site at https://`<username>`.github.io/pttutorialtest/
 
 You'll need to navigate to the page you generate directly if you want to see the
 output. In this repo, I have an example called example_tutorial.py and the url

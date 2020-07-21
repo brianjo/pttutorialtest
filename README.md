@@ -4,8 +4,6 @@ PyTorch tutorials are presented as sphinx style documentation at:
 
 ## [https://pytorch.org/tutorials](https://pytorch.org/tutorials)
 
-## This project
-
 This project is designed to test PyTorch tutorials one at a time. Our PyTorch tutorials site can take several hours to build, making it difficult for a tutorial writer to test their tutorials in a timely manner. This project strips away the downloads and tutorial content to make it easy to edit and test new tutorials locally. 
 
 The PyTorch project uses Sphinx-Gallery's notebook styled [examples](https://sphinx-gallery.readthedocs.io/en/latest/tutorials/plot_notebook.html#sphx-glr-tutorials-plot-notebook-py) to create the tutorials that reside on pytorch.org. The syntax is very simple. In essence, you write a specially  formatted Python file and it shows up as documentation page. You can read instructions for creating a Sphinx-Gallery file [here](https://sphinx-gallery.readthedocs.io/en/latest/syntax.html).

@@ -31,10 +31,7 @@ As an alternatie to building locally you can do the following.
 * Fork this repo.
 * Drop a new tutorial in beginner_source.
 
-There's a GitHub action that will build the site and put the results 
-in your forks github-pages branch. You'll need to enable this to use it. After it's enabled,  
-the site will be generated to a gh-pages branch. If you have gh-pages enabled, you can 
-view the site at https://`<username>`.github.io/pttutorialtest/
+There's a GitHub action that will build the site and put the results  in your forks github-pages branch. You'll need to enable this to use it. After it's enabled, the site will be generated to a gh-pages branch. If you have gh-pages enabled, you can view the site at https://`<username>`.github.io/pttutorialtest/
 
 You'll need to navigate to the page you generate directly if you want to see the
 output. In this repo, I have an example called example_tutorial.py and the url

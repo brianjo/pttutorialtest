@@ -202,7 +202,7 @@ prof.export_chrome_trace("trace.json")
 # User can examine the sequence of profiled operators after loading the trace file
 # in Chrome (``chrome://tracing``):
 #
-# .. image:: ../../_static/img/trace_img.png
+# .. image:: https://pytorch.org/tutorials/_images/trace_img.png
 #    :scale: 25 %
 
 ######################################################################

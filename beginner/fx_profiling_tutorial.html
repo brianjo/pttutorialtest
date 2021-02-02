@@ -1,0 +1,1025 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>(beta) Building a Simple CPU Performance Profiler with FX &mdash; PyTorch Tutorials 1.8.0.dev20210202+cpu documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://pytorch.org/" aria-label="PyTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/ecosystem">Ecosystem</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/mobile">Mobile</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li class="active">
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/docs/stable/index.html">
+                  <span class="dropdown-title">PyTorch</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/audio/stable/index.html">
+                  <span class="dropdown-title">torchaudio</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/text/stable/index.html">
+                  <span class="dropdown-title">torchtext</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/vision/stable/index.html">
+                  <span class="dropdown-title">torchvision</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/elastic/">
+                  <span class="dropdown-title">TorchElastic</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/serve/">
+                  <span class="dropdown-title">TorchServe</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/xla">
+                  <span class="dropdown-title">PyTorch on XLA Devices</span>
+                  <p></p>
+                </a>
+            </div>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/features">
+                  <span class="dropdown-title">About</span>
+                  <p>Learn about PyTorch’s features and capabilities</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/#community-module">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/resources">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://discuss.pytorch.org/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/hub">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="https://github.com/pytorch/pytorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.8.0.dev20210202+cpu
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="example_tutorial.html">What is PyTorch?</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>(beta) Building a Simple CPU Performance Profiler with FX</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/beginner/fx_profiling_tutorial.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">beginner/fx_profiling_tutorial</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-beginner-fx-profiling-tutorial-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="beta-building-a-simple-cpu-performance-profiler-with-fx">
+<span id="sphx-glr-beginner-fx-profiling-tutorial-py"></span><h1>(beta) Building a Simple CPU Performance Profiler with FX<a class="headerlink" href="#beta-building-a-simple-cpu-performance-profiler-with-fx" title="Permalink to this headline">¶</a></h1>
+<p><strong>Author</strong>: <a class="reference external" href="https://github.com/jamesr66a">James Reed</a></p>
+<p>In this tutorial, we are going to use FX to do the following:</p>
+<ol class="arabic simple">
+<li>Capture PyTorch Python code in a way that we can inspect and gather
+statistics about the structure and execution of the code</li>
+<li>Build out a small class that will serve as a simple performance “profiler”,
+collecting runtime statistics about each part of the model from actual
+runs.</li>
+</ol>
+<p>For this tutorial, we are going to use the torchvision ResNet18 model
+for demonstration purposes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.fx</span>
+<span class="kn">import</span> <span class="nn">torchvision.models</span> <span class="k">as</span> <span class="nn">models</span>
+
+<span class="n">rn18</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">()</span>
+<span class="n">rn18</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now that we have our model, we want to inspect deeper into its
+performance. That is, for the following invocation, which parts
+of the model are taking the longest?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">rn18</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A common way of answering that question is to go through the program
+source, add code that collects timestamps at various points in the
+program, and compare the difference between those timestamps to see
+how long the regions between the timestamps take.</p>
+<p>That technique is certainly applicable to PyTorch code, however it
+would be nicer if we didn’t have to copy over model code and edit it,
+especially code we haven’t written (like this torchvision model).
+Instead, we are going to use FX to automate this “instrumentation”
+process without needing to modify any source.</p>
+<p>First, let’s get some imports out of the way (we will be using all
+of these later in the code).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statistics</span><span class="o">,</span> <span class="nn">tabulate</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">torch.fx</span> <span class="kn">import</span> <span class="n">Interpreter</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">tabulate</span></code> is an external library that is not a dependency of PyTorch.
+We will be using it to more easily visualize performance data. Please
+make sure you’ve installed it from your favorite Python package source.</p>
+</div>
+<div class="section" id="capturing-the-model-with-symbolic-tracing">
+<h2>Capturing the Model with Symbolic Tracing<a class="headerlink" href="#capturing-the-model-with-symbolic-tracing" title="Permalink to this headline">¶</a></h2>
+<p>Next, we are going to use FX’s symbolic tracing mechanism to capture
+the definition of our model in a data structure we can manipulate
+and examine.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">traced_rn18</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">fx</span><span class="o">.</span><span class="n">symbolic_trace</span><span class="p">(</span><span class="n">rn18</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">traced_rn18</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>graph(xx: torch.Tensor) -&gt; torch.Tensor:
+    %conv1 : [#users=1] = call_module[target=conv1](args = (%x,), kwargs = {})
+    %bn1 : [#users=1] = call_module[target=bn1](args = (%conv1,), kwargs = {})
+    %relu_1 : [#users=1] = call_module[target=relu](args = (%bn1,), kwargs = {})
+    %maxpool : [#users=2] = call_module[target=maxpool](args = (%relu_1,), kwargs = {})
+    %layer1_0_conv1 : [#users=1] = call_module[target=layer1.0.conv1](args = (%maxpool,), kwargs = {})
+    %layer1_0_bn1 : [#users=1] = call_module[target=layer1.0.bn1](args = (%layer1_0_conv1,), kwargs = {})
+    %layer1_0_relu : [#users=1] = call_module[target=layer1.0.relu](args = (%layer1_0_bn1,), kwargs = {})
+    %layer1_0_conv2 : [#users=1] = call_module[target=layer1.0.conv2](args = (%layer1_0_relu,), kwargs = {})
+    %layer1_0_bn2 : [#users=1] = call_module[target=layer1.0.bn2](args = (%layer1_0_conv2,), kwargs = {})
+    %add_1 : [#users=1] = call_function[target=operator.add](args = (%layer1_0_bn2, %maxpool), kwargs = {})
+    %layer1_0_relu_1 : [#users=2] = call_module[target=layer1.0.relu](args = (%add_1,), kwargs = {})
+    %layer1_1_conv1 : [#users=1] = call_module[target=layer1.1.conv1](args = (%layer1_0_relu_1,), kwargs = {})
+    %layer1_1_bn1 : [#users=1] = call_module[target=layer1.1.bn1](args = (%layer1_1_conv1,), kwargs = {})
+    %layer1_1_relu : [#users=1] = call_module[target=layer1.1.relu](args = (%layer1_1_bn1,), kwargs = {})
+    %layer1_1_conv2 : [#users=1] = call_module[target=layer1.1.conv2](args = (%layer1_1_relu,), kwargs = {})
+    %layer1_1_bn2 : [#users=1] = call_module[target=layer1.1.bn2](args = (%layer1_1_conv2,), kwargs = {})
+    %add_2 : [#users=1] = call_function[target=operator.add](args = (%layer1_1_bn2, %layer1_0_relu_1), kwargs = {})
+    %layer1_1_relu_1 : [#users=2] = call_module[target=layer1.1.relu](args = (%add_2,), kwargs = {})
+    %layer2_0_conv1 : [#users=1] = call_module[target=layer2.0.conv1](args = (%layer1_1_relu_1,), kwargs = {})
+    %layer2_0_bn1 : [#users=1] = call_module[target=layer2.0.bn1](args = (%layer2_0_conv1,), kwargs = {})
+    %layer2_0_relu : [#users=1] = call_module[target=layer2.0.relu](args = (%layer2_0_bn1,), kwargs = {})
+    %layer2_0_conv2 : [#users=1] = call_module[target=layer2.0.conv2](args = (%layer2_0_relu,), kwargs = {})
+    %layer2_0_bn2 : [#users=1] = call_module[target=layer2.0.bn2](args = (%layer2_0_conv2,), kwargs = {})
+    %layer2_0_downsample_0 : [#users=1] = call_module[target=layer2.0.downsample.0](args = (%layer1_1_relu_1,), kwargs = {})
+    %layer2_0_downsample_1 : [#users=1] = call_module[target=layer2.0.downsample.1](args = (%layer2_0_downsample_0,), kwargs = {})
+    %add_3 : [#users=1] = call_function[target=operator.add](args = (%layer2_0_bn2, %layer2_0_downsample_1), kwargs = {})
+    %layer2_0_relu_1 : [#users=2] = call_module[target=layer2.0.relu](args = (%add_3,), kwargs = {})
+    %layer2_1_conv1 : [#users=1] = call_module[target=layer2.1.conv1](args = (%layer2_0_relu_1,), kwargs = {})
+    %layer2_1_bn1 : [#users=1] = call_module[target=layer2.1.bn1](args = (%layer2_1_conv1,), kwargs = {})
+    %layer2_1_relu : [#users=1] = call_module[target=layer2.1.relu](args = (%layer2_1_bn1,), kwargs = {})
+    %layer2_1_conv2 : [#users=1] = call_module[target=layer2.1.conv2](args = (%layer2_1_relu,), kwargs = {})
+    %layer2_1_bn2 : [#users=1] = call_module[target=layer2.1.bn2](args = (%layer2_1_conv2,), kwargs = {})
+    %add_4 : [#users=1] = call_function[target=operator.add](args = (%layer2_1_bn2, %layer2_0_relu_1), kwargs = {})
+    %layer2_1_relu_1 : [#users=2] = call_module[target=layer2.1.relu](args = (%add_4,), kwargs = {})
+    %layer3_0_conv1 : [#users=1] = call_module[target=layer3.0.conv1](args = (%layer2_1_relu_1,), kwargs = {})
+    %layer3_0_bn1 : [#users=1] = call_module[target=layer3.0.bn1](args = (%layer3_0_conv1,), kwargs = {})
+    %layer3_0_relu : [#users=1] = call_module[target=layer3.0.relu](args = (%layer3_0_bn1,), kwargs = {})
+    %layer3_0_conv2 : [#users=1] = call_module[target=layer3.0.conv2](args = (%layer3_0_relu,), kwargs = {})
+    %layer3_0_bn2 : [#users=1] = call_module[target=layer3.0.bn2](args = (%layer3_0_conv2,), kwargs = {})
+    %layer3_0_downsample_0 : [#users=1] = call_module[target=layer3.0.downsample.0](args = (%layer2_1_relu_1,), kwargs = {})
+    %layer3_0_downsample_1 : [#users=1] = call_module[target=layer3.0.downsample.1](args = (%layer3_0_downsample_0,), kwargs = {})
+    %add_5 : [#users=1] = call_function[target=operator.add](args = (%layer3_0_bn2, %layer3_0_downsample_1), kwargs = {})
+    %layer3_0_relu_1 : [#users=2] = call_module[target=layer3.0.relu](args = (%add_5,), kwargs = {})
+    %layer3_1_conv1 : [#users=1] = call_module[target=layer3.1.conv1](args = (%layer3_0_relu_1,), kwargs = {})
+    %layer3_1_bn1 : [#users=1] = call_module[target=layer3.1.bn1](args = (%layer3_1_conv1,), kwargs = {})
+    %layer3_1_relu : [#users=1] = call_module[target=layer3.1.relu](args = (%layer3_1_bn1,), kwargs = {})
+    %layer3_1_conv2 : [#users=1] = call_module[target=layer3.1.conv2](args = (%layer3_1_relu,), kwargs = {})
+    %layer3_1_bn2 : [#users=1] = call_module[target=layer3.1.bn2](args = (%layer3_1_conv2,), kwargs = {})
+    %add_6 : [#users=1] = call_function[target=operator.add](args = (%layer3_1_bn2, %layer3_0_relu_1), kwargs = {})
+    %layer3_1_relu_1 : [#users=2] = call_module[target=layer3.1.relu](args = (%add_6,), kwargs = {})
+    %layer4_0_conv1 : [#users=1] = call_module[target=layer4.0.conv1](args = (%layer3_1_relu_1,), kwargs = {})
+    %layer4_0_bn1 : [#users=1] = call_module[target=layer4.0.bn1](args = (%layer4_0_conv1,), kwargs = {})
+    %layer4_0_relu : [#users=1] = call_module[target=layer4.0.relu](args = (%layer4_0_bn1,), kwargs = {})
+    %layer4_0_conv2 : [#users=1] = call_module[target=layer4.0.conv2](args = (%layer4_0_relu,), kwargs = {})
+    %layer4_0_bn2 : [#users=1] = call_module[target=layer4.0.bn2](args = (%layer4_0_conv2,), kwargs = {})
+    %layer4_0_downsample_0 : [#users=1] = call_module[target=layer4.0.downsample.0](args = (%layer3_1_relu_1,), kwargs = {})
+    %layer4_0_downsample_1 : [#users=1] = call_module[target=layer4.0.downsample.1](args = (%layer4_0_downsample_0,), kwargs = {})
+    %add_7 : [#users=1] = call_function[target=operator.add](args = (%layer4_0_bn2, %layer4_0_downsample_1), kwargs = {})
+    %layer4_0_relu_1 : [#users=2] = call_module[target=layer4.0.relu](args = (%add_7,), kwargs = {})
+    %layer4_1_conv1 : [#users=1] = call_module[target=layer4.1.conv1](args = (%layer4_0_relu_1,), kwargs = {})
+    %layer4_1_bn1 : [#users=1] = call_module[target=layer4.1.bn1](args = (%layer4_1_conv1,), kwargs = {})
+    %layer4_1_relu : [#users=1] = call_module[target=layer4.1.relu](args = (%layer4_1_bn1,), kwargs = {})
+    %layer4_1_conv2 : [#users=1] = call_module[target=layer4.1.conv2](args = (%layer4_1_relu,), kwargs = {})
+    %layer4_1_bn2 : [#users=1] = call_module[target=layer4.1.bn2](args = (%layer4_1_conv2,), kwargs = {})
+    %add_8 : [#users=1] = call_function[target=operator.add](args = (%layer4_1_bn2, %layer4_0_relu_1), kwargs = {})
+    %layer4_1_relu_1 : [#users=1] = call_module[target=layer4.1.relu](args = (%add_8,), kwargs = {})
+    %avgpool : [#users=1] = call_module[target=avgpool](args = (%layer4_1_relu_1,), kwargs = {})
+    %flatten_1 : [#users=1] = call_function[target=torch.flatten](args = (%avgpool, 1), kwargs = {})
+    %fc : [#users=1] = call_module[target=fc](args = (%flatten_1,), kwargs = {})
+    return fc
+</pre></div>
+</div>
+<p>This gives us a Graph representation of the ResNet18 model. A Graph
+consists of a series of Nodes connected to each other. Each Node
+represents a call-site in the Python code (whether to a function,
+a module, or a method) and the edges (represented as <code class="docutils literal notranslate"><span class="pre">args</span></code> and <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>
+on each node) represent the values passed between these call-sites. More
+information about the Graph representation and the rest of FX’s APIs ca
+be found at the FX documentation <a class="reference external" href="https://pytorch.org/docs/master/fx.html">https://pytorch.org/docs/master/fx.html</a>.</p>
+</div>
+<div class="section" id="creating-a-profiling-interpreter">
+<h2>Creating a Profiling Interpreter<a class="headerlink" href="#creating-a-profiling-interpreter" title="Permalink to this headline">¶</a></h2>
+<p>Next, we are going to create a class that inherits from <code class="docutils literal notranslate"><span class="pre">torch.fx.Interpreter</span></code>.
+Though the <code class="docutils literal notranslate"><span class="pre">GraphModule</span></code> that <code class="docutils literal notranslate"><span class="pre">symbolic_trace</span></code> produces compiles Python code
+that is run when you call a <code class="docutils literal notranslate"><span class="pre">GraphModule</span></code>, an alternative way to run a
+<code class="docutils literal notranslate"><span class="pre">GraphModule</span></code> is by executing each <code class="docutils literal notranslate"><span class="pre">Node</span></code> in the <code class="docutils literal notranslate"><span class="pre">Graph</span></code> one by one. That is
+the functionality that <code class="docutils literal notranslate"><span class="pre">Interpreter</span></code> provides: It interprets the graph node-
+by-node.</p>
+<p>By inheriting from <code class="docutils literal notranslate"><span class="pre">Interpreter</span></code>, we can override various functionality and
+install the profiling behavior we want. The goal is to have an object to which
+we can pass a model, invoke the model 1 or more times, then get statistics about
+how long the model and each part of the model took during those runs.</p>
+<p>Let’s define our <code class="docutils literal notranslate"><span class="pre">ProfilingInterpreter</span></code> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProfilingInterpreter</span><span class="p">(</span><span class="n">Interpreter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod</span> <span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+        <span class="c1"># Rather than have the user symbolically trace their model,</span>
+        <span class="c1"># we&#39;re going to do it in the constructor. As a result, the</span>
+        <span class="c1"># user can pass in any ``Module`` without having to worry about</span>
+        <span class="c1"># symbolic tracing APIs</span>
+        <span class="n">gm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">fx</span><span class="o">.</span><span class="n">symbolic_trace</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">gm</span><span class="p">)</span>
+
+        <span class="c1"># We are going to store away two things here:</span>
+        <span class="c1">#</span>
+        <span class="c1"># 1. A list of total runtimes for ``mod``. In other words, we are</span>
+        <span class="c1">#    storing away the time ``mod(...)`` took each time this</span>
+        <span class="c1">#    interpreter is called.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_runtime_sec</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># 2. A map from ``Node`` to a list of times (in seconds) that</span>
+        <span class="c1">#    node took to run. This can be seen as similar to (1) but</span>
+        <span class="c1">#    for specific sub-parts of the model.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtimes_sec</span> <span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">fx</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1">######################################################################</span>
+    <span class="c1"># Next, let&#39;s override our first method: ``run()``. ``Interpreter``&#39;s ``run``</span>
+    <span class="c1"># method is the top-level entrypoint for execution of the model. We will</span>
+    <span class="c1"># want to intercept this so that we can record the total runtime of the</span>
+    <span class="c1"># model.</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="c1"># Record the time we started running the model</span>
+        <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># Run the model by delegating back into Interpreter.run()</span>
+        <span class="n">return_val</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="c1"># Record the time we finished running the model</span>
+        <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># Store the total elapsed time this model execution took in the</span>
+        <span class="c1"># ProfilingInterpreter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_runtime_sec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">return_val</span>
+
+    <span class="c1">######################################################################</span>
+    <span class="c1"># Now, let&#39;s override ``run_node``. ``Interpreter`` calls ``run_node`` each</span>
+    <span class="c1"># time it executes a single node. We will intercept this so that we</span>
+    <span class="c1"># can measure and record the time taken for each individual call in</span>
+    <span class="c1"># the model.</span>
+
+    <span class="k">def</span> <span class="nf">run_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span> <span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">fx</span><span class="o">.</span><span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="c1"># Record the time we started running the op</span>
+        <span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># Run the op by delegating back into Interpreter.run_node()</span>
+        <span class="n">return_val</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run_node</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="c1"># Record the time we finished running the op</span>
+        <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># If we don&#39;t have an entry for this node in our runtimes_sec</span>
+        <span class="c1"># data structure, add one with an empty list value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtimes_sec</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="c1"># Record the total elapsed time for this single invocation</span>
+        <span class="c1"># in the runtimes_sec data structure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtimes_sec</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">return_val</span>
+
+    <span class="c1">######################################################################</span>
+    <span class="c1"># Finally, we are going to define a method (one which doesn&#39;t override</span>
+    <span class="c1"># any ``Interpreter`` method) that provides us a nice, organized view of</span>
+    <span class="c1"># the data we have collected.</span>
+
+    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">should_sort</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># Build up a list of summary information for each node</span>
+        <span class="n">node_summaries</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Calculate the mean runtime for the whole network. Because the</span>
+        <span class="c1"># network may have been called multiple times during profiling,</span>
+        <span class="c1"># we need to summarize the runtimes. We choose to use the</span>
+        <span class="c1"># arithmetic mean for this.</span>
+        <span class="n">mean_total_runtime</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_runtime_sec</span><span class="p">)</span>
+
+        <span class="c1"># For each node, record summary statistics</span>
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">runtimes</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtimes_sec</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Similarly, compute the mean runtime for ``node``</span>
+            <span class="n">mean_runtime</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">runtimes</span><span class="p">)</span>
+            <span class="c1"># For easier understanding, we also compute the percentage</span>
+            <span class="c1"># time each node took with respect to the whole network.</span>
+            <span class="n">pct_total</span> <span class="o">=</span> <span class="n">mean_runtime</span> <span class="o">/</span> <span class="n">mean_total_runtime</span> <span class="o">*</span> <span class="mi">100</span>
+            <span class="c1"># Record the node&#39;s type, name of the node, mean runtime, and</span>
+            <span class="c1"># percent runtim</span>
+            <span class="n">node_summaries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="n">mean_runtime</span><span class="p">,</span> <span class="n">pct_total</span><span class="p">])</span>
+
+        <span class="c1"># One of the most important questions to answer when doing performance</span>
+        <span class="c1"># profiling is &quot;Which op(s) took the longest?&quot;. We can make this easy</span>
+        <span class="c1"># to see by providing sorting functionality in our summary view</span>
+        <span class="k">if</span> <span class="n">should_sort</span><span class="p">:</span>
+            <span class="n">node_summaries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Use the ``tabulate`` library to create a well-formatted table</span>
+        <span class="c1"># presenting our summary information</span>
+        <span class="n">headers</span> <span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;Op type&#39;</span><span class="p">,</span> <span class="s1">&#39;Op&#39;</span><span class="p">,</span> <span class="s1">&#39;Average runtime (s)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pct total runtime&#39;</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="n">node_summaries</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We use Python’s <code class="docutils literal notranslate"><span class="pre">time.time</span></code> function to pull wall clock
+timestamps and compare them. This is not the most accurate
+way to measure performance, and will only give us a first-
+order approximation. We use this simple technique only for the
+purpose of demonstration in this tutorial.</p>
+</div>
+</div>
+<div class="section" id="investigating-the-performance-of-resnet18">
+<h2>Investigating the Performance of ResNet18<a class="headerlink" href="#investigating-the-performance-of-resnet18" title="Permalink to this headline">¶</a></h2>
+<p>We can now use <code class="docutils literal notranslate"><span class="pre">ProfilingInterpreter</span></code> to inspect the performance
+characteristics of our ResNet18 model;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interp</span> <span class="o">=</span> <span class="n">ProfilingInterpreter</span><span class="p">(</span><span class="n">rn18</span><span class="p">)</span>
+<span class="n">interp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Op type        Op                       Average runtime (s)    Pct total runtime
+-------------  ---------------------  ---------------------  -------------------
+call_module    maxpool                          0.0200095             14.2437
+call_module    conv1                            0.0102513              7.29735
+call_module    layer1_0_conv1                   0.00825381             5.87545
+call_module    layer1_1_conv2                   0.00740123             5.26854
+call_module    layer1_0_conv2                   0.00739789             5.26617
+call_module    layer4_0_conv2                   0.00651073             4.63465
+call_module    bn1                              0.00628757             4.47579
+call_module    layer1_1_conv1                   0.0058651              4.17505
+call_module    layer2_1_conv2                   0.00558329             3.97445
+call_module    layer2_1_conv1                   0.00451565             3.21445
+call_module    layer4_1_conv1                   0.00445008             3.16778
+call_module    layer4_1_conv2                   0.00442004             3.1464
+call_module    layer3_1_conv1                   0.00422287             3.00604
+call_module    layer2_0_conv2                   0.00422001             3.004
+call_module    layer3_0_conv2                   0.00415397             2.95699
+call_module    layer3_1_conv2                   0.00405622             2.88741
+call_module    layer4_0_conv1                   0.00392818             2.79627
+call_module    layer2_0_conv1                   0.00373054             2.65557
+call_module    layer3_0_conv1                   0.0030129              2.14472
+call_module    layer1_0_bn2                     0.00195932             1.39474
+call_module    layer1_1_bn2                     0.00190926             1.3591
+call_function  add_2                            0.00177073             1.26049
+call_module    layer1_0_bn1                     0.0017705              1.26032
+call_function  add_1                            0.00142813             1.01661
+call_module    layer2_1_bn1                     0.00126457             0.900182
+call_module    layer2_1_bn2                     0.0012362              0.879986
+call_module    layer2_0_downsample_0            0.000945807            0.67327
+call_module    relu_1                           0.000746965            0.531725
+call_function  add_4                            0.000720739            0.513056
+call_module    layer3_0_downsample_0            0.000700474            0.49863
+call_module    layer1_1_bn1                     0.000669718            0.476737
+call_module    layer4_0_downsample_0            0.000558138            0.397309
+call_module    layer2_0_bn1                     0.000355244            0.252879
+call_module    layer2_0_bn2                     0.000350237            0.249315
+call_module    layer2_0_downsample_1            0.000308037            0.219275
+call_module    layer1_0_relu                    0.000307798            0.219105
+call_function  add_3                            0.000296831            0.211298
+call_module    fc                               0.000275612            0.196194
+call_module    layer1_1_relu_1                  0.000220776            0.157159
+call_module    layer1_0_relu_1                  0.000219822            0.15648
+call_module    layer3_0_downsample_1            0.000219107            0.15597
+call_module    layer3_0_bn1                     0.000213623            0.152067
+call_module    layer1_1_relu                    0.00020957             0.149182
+call_module    layer3_1_bn2                     0.000201941            0.143751
+call_module    layer3_1_bn1                     0.00019598             0.139508
+call_module    layer3_0_bn2                     0.000179768            0.127967
+call_module    layer2_0_relu                    0.000175238            0.124742
+call_module    layer2_1_relu                    0.000171423            0.122027
+call_module    layer4_0_downsample_1            0.000169992            0.121009
+call_module    layer2_0_relu_1                  0.000153542            0.109298
+call_function  add_6                            0.000151634            0.10794
+call_function  add_5                            0.00014782             0.105225
+call_module    layer4_0_bn1                     0.000143766            0.10234
+call_module    layer4_0_bn2                     0.000140905            0.100303
+call_module    layer2_1_relu_1                  0.000138998            0.0989454
+call_module    layer4_1_bn2                     0.000137568            0.0979271
+call_module    layer4_1_bn1                     0.000133514            0.0950419
+call_module    avgpool                          0.000119209            0.0848588
+call_module    layer3_0_relu                    9.84669e-05            0.0700934
+call_module    layer3_1_relu                    9.67979e-05            0.0689054
+call_module    layer3_0_relu_1                  9.46522e-05            0.0673779
+call_module    layer3_1_relu_1                  9.29832e-05            0.0661899
+call_function  add_8                            8.29697e-05            0.0590617
+call_function  add_7                            7.60555e-05            0.0541399
+call_module    layer4_0_relu                    6.60419e-05            0.0470118
+call_module    layer4_1_relu                    6.55651e-05            0.0466723
+call_module    layer4_1_relu_1                  6.19888e-05            0.0441266
+call_module    layer4_0_relu_1                  5.22137e-05            0.0371682
+call_function  flatten_1                        2.74181e-05            0.0195175
+placeholder    x                                1.43051e-05            0.0101831
+output         output                           1.35899e-05            0.0096739
+</pre></div>
+</div>
+<p>There are two things we should call out here:</p>
+<ul class="simple">
+<li>MaxPool2d takes up the most time. This is a known issue:
+<a class="reference external" href="https://github.com/pytorch/pytorch/issues/51393">https://github.com/pytorch/pytorch/issues/51393</a></li>
+<li>BatchNorm2d also takes up significant time. We can continue this
+line of thinking and optimize this in the Conv-BN Fusion with FX
+tutorial TODO: link</li>
+</ul>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>As we can see, using FX we can easily capture PyTorch programs (even
+ones we don’t have the source code for!) in a machine-interpretable
+format and use that for analysis, such as the performance analysis
+we’ve done here. FX opens up an exiciting world of possibilities for
+working with PyTorch programs.</p>
+<p>Finally, since FX is still in beta, we would be happy to hear any
+feedback you have about using it. Please feel free to use the
+PyTorch Forums (TODO: forum topic) and the issue tracker
+(<a class="reference external" href="https://github.com/pytorch/pytorch/issues">https://github.com/pytorch/pytorch/issues</a>) to provide any feedback
+you might have.</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.668 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-beginner-fx-profiling-tutorial-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/0d6f877d266145181b01455181eba794/fx_profiling_tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">fx_profiling_tutorial.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/73ab1ecf065d6879e2116ffbd559c78a/fx_profiling_tutorial.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">fx_profiling_tutorial.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, PyTorch.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">(beta) Building a Simple CPU Performance Profiler with FX</a><ul>
+<li><a class="reference internal" href="#capturing-the-model-with-symbolic-tracing">Capturing the Model with Symbolic Tracing</a></li>
+<li><a class="reference internal" href="#creating-a-profiling-interpreter">Creating a Profiling Interpreter</a></li>
+<li><a class="reference internal" href="#investigating-the-performance-of-resnet18">Investigating the Performance of ResNet18</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script type="text/javascript" src="../_static/jquery.js"></script>
+         <script type="text/javascript" src="../_static/underscore.js"></script>
+         <script type="text/javascript" src="../_static/doctools.js"></script>
+         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-90545585-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch.org/docs/stable/index.html">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch.org/tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch.org/resources">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://pytorch.org/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/">PyTorch</a></li>
+            <li><a href="https://pytorch.org/get-started">Get Started</a></li>
+            <li><a href="https://pytorch.org/features">Features</a></li>
+            <li><a href="https://pytorch.org/ecosystem">Ecosystem</a></li>
+            <li><a href="https://pytorch.org/blog/">Blog</a></li>
+            <li><a href="https://github.com/pytorch/pytorch/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/resources">Resources</a></li>
+            <li><a href="https://pytorch.org/tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch.org/docs/stable/index.html">Docs</a></li>
+            <li><a href="https://discuss.pytorch.org" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/pytorch/pytorch/issues" target="_blank">Github Issues</a></li>
+            <li><a href="https://pytorch.org/assets/brand-guidelines/PyTorch-Brand-Guidelines.pdf" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="https://www.facebook.com/pytorch" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/pytorch" target="_blank" class="twitter"></a>
+            <a href="https://www.youtube.com/pytorch" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. As the current maintainers of this site, Facebook’s Cookies Policy applies. Learn more, including about available controls: <a href="https://www.facebook.com/policies/cookies/">Cookies Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://pytorch.org/" aria-label="PyTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/ecosystem">Ecosystem</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/mobile">Mobile</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/hub">PyTorch Hub</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li class="active">
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Docs
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch.org/docs/stable/index.html">PyTorch</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/audio/stable/index.html">torchaudio</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/text/stable/index.html">torchtext</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/vision/stable/index.html">torchvision</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/elastic/">TorchElastic</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/serve/">TorchServe</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/xla">PyTorch on XLA Devices</a>
+            </li>
+          </ul>
+
+          <li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch.org/resources">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/features">About</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/hub">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/#community-module">Community</a>
+            </li>
+
+            <li>
+              <a href="https://discuss.pytorch.org/">Forums</a>
+            </li>
+          </ul>
+
+          <li>
+            <a href="https://github.com/pytorch/pytorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

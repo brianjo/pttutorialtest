@@ -1,0 +1,479 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download_beginner_fx_profiling_tutorial.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr_beginner_fx_profiling_tutorial.py:
+
+
+(beta) Building a Simple CPU Performance Profiler with FX
+*******************************************************
+**Author**: `James Reed <https://github.com/jamesr66a>`_
+
+In this tutorial, we are going to use FX to do the following:
+
+1) Capture PyTorch Python code in a way that we can inspect and gather
+   statistics about the structure and execution of the code
+2) Build out a small class that will serve as a simple performance "profiler",
+   collecting runtime statistics about each part of the model from actual
+   runs.
+
+
+For this tutorial, we are going to use the torchvision ResNet18 model
+for demonstration purposes.
+
+
+.. code-block:: default
+
+
+    import torch
+    import torch.fx
+    import torchvision.models as models
+
+    rn18 = models.resnet18()
+    rn18.eval()
+
+
+
+
+
+
+
+Now that we have our model, we want to inspect deeper into its
+performance. That is, for the following invocation, which parts
+of the model are taking the longest?
+
+
+.. code-block:: default
+
+    input = torch.randn(5, 3, 224, 224)
+    output = rn18(input)
+
+
+
+
+
+
+
+A common way of answering that question is to go through the program
+source, add code that collects timestamps at various points in the
+program, and compare the difference between those timestamps to see
+how long the regions between the timestamps take.
+
+That technique is certainly applicable to PyTorch code, however it
+would be nicer if we didn't have to copy over model code and edit it,
+especially code we haven't written (like this torchvision model).
+Instead, we are going to use FX to automate this "instrumentation"
+process without needing to modify any source.
+
+First, let's get some imports out of the way (we will be using all
+of these later in the code).
+
+
+.. code-block:: default
+
+
+    import statistics, tabulate, time
+    from typing import Any, Dict, List
+    from torch.fx import Interpreter
+
+
+
+
+
+
+
+.. note::
+    ``tabulate`` is an external library that is not a dependency of PyTorch.
+    We will be using it to more easily visualize performance data. Please
+    make sure you've installed it from your favorite Python package source.
+
+Capturing the Model with Symbolic Tracing
+-----------------------------------------
+Next, we are going to use FX's symbolic tracing mechanism to capture
+the definition of our model in a data structure we can manipulate
+and examine.
+
+
+.. code-block:: default
+
+
+    traced_rn18 = torch.fx.symbolic_trace(rn18)
+    print(traced_rn18.graph)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    graph(xx: torch.Tensor) -> torch.Tensor:
+        %conv1 : [#users=1] = call_module[target=conv1](args = (%x,), kwargs = {})
+        %bn1 : [#users=1] = call_module[target=bn1](args = (%conv1,), kwargs = {})
+        %relu_1 : [#users=1] = call_module[target=relu](args = (%bn1,), kwargs = {})
+        %maxpool : [#users=2] = call_module[target=maxpool](args = (%relu_1,), kwargs = {})
+        %layer1_0_conv1 : [#users=1] = call_module[target=layer1.0.conv1](args = (%maxpool,), kwargs = {})
+        %layer1_0_bn1 : [#users=1] = call_module[target=layer1.0.bn1](args = (%layer1_0_conv1,), kwargs = {})
+        %layer1_0_relu : [#users=1] = call_module[target=layer1.0.relu](args = (%layer1_0_bn1,), kwargs = {})
+        %layer1_0_conv2 : [#users=1] = call_module[target=layer1.0.conv2](args = (%layer1_0_relu,), kwargs = {})
+        %layer1_0_bn2 : [#users=1] = call_module[target=layer1.0.bn2](args = (%layer1_0_conv2,), kwargs = {})
+        %add_1 : [#users=1] = call_function[target=operator.add](args = (%layer1_0_bn2, %maxpool), kwargs = {})
+        %layer1_0_relu_1 : [#users=2] = call_module[target=layer1.0.relu](args = (%add_1,), kwargs = {})
+        %layer1_1_conv1 : [#users=1] = call_module[target=layer1.1.conv1](args = (%layer1_0_relu_1,), kwargs = {})
+        %layer1_1_bn1 : [#users=1] = call_module[target=layer1.1.bn1](args = (%layer1_1_conv1,), kwargs = {})
+        %layer1_1_relu : [#users=1] = call_module[target=layer1.1.relu](args = (%layer1_1_bn1,), kwargs = {})
+        %layer1_1_conv2 : [#users=1] = call_module[target=layer1.1.conv2](args = (%layer1_1_relu,), kwargs = {})
+        %layer1_1_bn2 : [#users=1] = call_module[target=layer1.1.bn2](args = (%layer1_1_conv2,), kwargs = {})
+        %add_2 : [#users=1] = call_function[target=operator.add](args = (%layer1_1_bn2, %layer1_0_relu_1), kwargs = {})
+        %layer1_1_relu_1 : [#users=2] = call_module[target=layer1.1.relu](args = (%add_2,), kwargs = {})
+        %layer2_0_conv1 : [#users=1] = call_module[target=layer2.0.conv1](args = (%layer1_1_relu_1,), kwargs = {})
+        %layer2_0_bn1 : [#users=1] = call_module[target=layer2.0.bn1](args = (%layer2_0_conv1,), kwargs = {})
+        %layer2_0_relu : [#users=1] = call_module[target=layer2.0.relu](args = (%layer2_0_bn1,), kwargs = {})
+        %layer2_0_conv2 : [#users=1] = call_module[target=layer2.0.conv2](args = (%layer2_0_relu,), kwargs = {})
+        %layer2_0_bn2 : [#users=1] = call_module[target=layer2.0.bn2](args = (%layer2_0_conv2,), kwargs = {})
+        %layer2_0_downsample_0 : [#users=1] = call_module[target=layer2.0.downsample.0](args = (%layer1_1_relu_1,), kwargs = {})
+        %layer2_0_downsample_1 : [#users=1] = call_module[target=layer2.0.downsample.1](args = (%layer2_0_downsample_0,), kwargs = {})
+        %add_3 : [#users=1] = call_function[target=operator.add](args = (%layer2_0_bn2, %layer2_0_downsample_1), kwargs = {})
+        %layer2_0_relu_1 : [#users=2] = call_module[target=layer2.0.relu](args = (%add_3,), kwargs = {})
+        %layer2_1_conv1 : [#users=1] = call_module[target=layer2.1.conv1](args = (%layer2_0_relu_1,), kwargs = {})
+        %layer2_1_bn1 : [#users=1] = call_module[target=layer2.1.bn1](args = (%layer2_1_conv1,), kwargs = {})
+        %layer2_1_relu : [#users=1] = call_module[target=layer2.1.relu](args = (%layer2_1_bn1,), kwargs = {})
+        %layer2_1_conv2 : [#users=1] = call_module[target=layer2.1.conv2](args = (%layer2_1_relu,), kwargs = {})
+        %layer2_1_bn2 : [#users=1] = call_module[target=layer2.1.bn2](args = (%layer2_1_conv2,), kwargs = {})
+        %add_4 : [#users=1] = call_function[target=operator.add](args = (%layer2_1_bn2, %layer2_0_relu_1), kwargs = {})
+        %layer2_1_relu_1 : [#users=2] = call_module[target=layer2.1.relu](args = (%add_4,), kwargs = {})
+        %layer3_0_conv1 : [#users=1] = call_module[target=layer3.0.conv1](args = (%layer2_1_relu_1,), kwargs = {})
+        %layer3_0_bn1 : [#users=1] = call_module[target=layer3.0.bn1](args = (%layer3_0_conv1,), kwargs = {})
+        %layer3_0_relu : [#users=1] = call_module[target=layer3.0.relu](args = (%layer3_0_bn1,), kwargs = {})
+        %layer3_0_conv2 : [#users=1] = call_module[target=layer3.0.conv2](args = (%layer3_0_relu,), kwargs = {})
+        %layer3_0_bn2 : [#users=1] = call_module[target=layer3.0.bn2](args = (%layer3_0_conv2,), kwargs = {})
+        %layer3_0_downsample_0 : [#users=1] = call_module[target=layer3.0.downsample.0](args = (%layer2_1_relu_1,), kwargs = {})
+        %layer3_0_downsample_1 : [#users=1] = call_module[target=layer3.0.downsample.1](args = (%layer3_0_downsample_0,), kwargs = {})
+        %add_5 : [#users=1] = call_function[target=operator.add](args = (%layer3_0_bn2, %layer3_0_downsample_1), kwargs = {})
+        %layer3_0_relu_1 : [#users=2] = call_module[target=layer3.0.relu](args = (%add_5,), kwargs = {})
+        %layer3_1_conv1 : [#users=1] = call_module[target=layer3.1.conv1](args = (%layer3_0_relu_1,), kwargs = {})
+        %layer3_1_bn1 : [#users=1] = call_module[target=layer3.1.bn1](args = (%layer3_1_conv1,), kwargs = {})
+        %layer3_1_relu : [#users=1] = call_module[target=layer3.1.relu](args = (%layer3_1_bn1,), kwargs = {})
+        %layer3_1_conv2 : [#users=1] = call_module[target=layer3.1.conv2](args = (%layer3_1_relu,), kwargs = {})
+        %layer3_1_bn2 : [#users=1] = call_module[target=layer3.1.bn2](args = (%layer3_1_conv2,), kwargs = {})
+        %add_6 : [#users=1] = call_function[target=operator.add](args = (%layer3_1_bn2, %layer3_0_relu_1), kwargs = {})
+        %layer3_1_relu_1 : [#users=2] = call_module[target=layer3.1.relu](args = (%add_6,), kwargs = {})
+        %layer4_0_conv1 : [#users=1] = call_module[target=layer4.0.conv1](args = (%layer3_1_relu_1,), kwargs = {})
+        %layer4_0_bn1 : [#users=1] = call_module[target=layer4.0.bn1](args = (%layer4_0_conv1,), kwargs = {})
+        %layer4_0_relu : [#users=1] = call_module[target=layer4.0.relu](args = (%layer4_0_bn1,), kwargs = {})
+        %layer4_0_conv2 : [#users=1] = call_module[target=layer4.0.conv2](args = (%layer4_0_relu,), kwargs = {})
+        %layer4_0_bn2 : [#users=1] = call_module[target=layer4.0.bn2](args = (%layer4_0_conv2,), kwargs = {})
+        %layer4_0_downsample_0 : [#users=1] = call_module[target=layer4.0.downsample.0](args = (%layer3_1_relu_1,), kwargs = {})
+        %layer4_0_downsample_1 : [#users=1] = call_module[target=layer4.0.downsample.1](args = (%layer4_0_downsample_0,), kwargs = {})
+        %add_7 : [#users=1] = call_function[target=operator.add](args = (%layer4_0_bn2, %layer4_0_downsample_1), kwargs = {})
+        %layer4_0_relu_1 : [#users=2] = call_module[target=layer4.0.relu](args = (%add_7,), kwargs = {})
+        %layer4_1_conv1 : [#users=1] = call_module[target=layer4.1.conv1](args = (%layer4_0_relu_1,), kwargs = {})
+        %layer4_1_bn1 : [#users=1] = call_module[target=layer4.1.bn1](args = (%layer4_1_conv1,), kwargs = {})
+        %layer4_1_relu : [#users=1] = call_module[target=layer4.1.relu](args = (%layer4_1_bn1,), kwargs = {})
+        %layer4_1_conv2 : [#users=1] = call_module[target=layer4.1.conv2](args = (%layer4_1_relu,), kwargs = {})
+        %layer4_1_bn2 : [#users=1] = call_module[target=layer4.1.bn2](args = (%layer4_1_conv2,), kwargs = {})
+        %add_8 : [#users=1] = call_function[target=operator.add](args = (%layer4_1_bn2, %layer4_0_relu_1), kwargs = {})
+        %layer4_1_relu_1 : [#users=1] = call_module[target=layer4.1.relu](args = (%add_8,), kwargs = {})
+        %avgpool : [#users=1] = call_module[target=avgpool](args = (%layer4_1_relu_1,), kwargs = {})
+        %flatten_1 : [#users=1] = call_function[target=torch.flatten](args = (%avgpool, 1), kwargs = {})
+        %fc : [#users=1] = call_module[target=fc](args = (%flatten_1,), kwargs = {})
+        return fc
+
+
+This gives us a Graph representation of the ResNet18 model. A Graph
+consists of a series of Nodes connected to each other. Each Node
+represents a call-site in the Python code (whether to a function,
+a module, or a method) and the edges (represented as ``args`` and ``kwargs``
+on each node) represent the values passed between these call-sites. More
+information about the Graph representation and the rest of FX's APIs ca
+be found at the FX documentation https://pytorch.org/docs/master/fx.html.
+
+Creating a Profiling Interpreter
+--------------------------------
+Next, we are going to create a class that inherits from ``torch.fx.Interpreter``.
+Though the ``GraphModule`` that ``symbolic_trace`` produces compiles Python code
+that is run when you call a ``GraphModule``, an alternative way to run a
+``GraphModule`` is by executing each ``Node`` in the ``Graph`` one by one. That is
+the functionality that ``Interpreter`` provides: It interprets the graph node-
+by-node.
+
+By inheriting from ``Interpreter``, we can override various functionality and
+install the profiling behavior we want. The goal is to have an object to which
+we can pass a model, invoke the model 1 or more times, then get statistics about
+how long the model and each part of the model took during those runs.
+
+Let's define our ``ProfilingInterpreter`` class:
+
+
+.. code-block:: default
+
+
+    class ProfilingInterpreter(Interpreter):
+        def __init__(self, mod : torch.nn.Module):
+            # Rather than have the user symbolically trace their model,
+            # we're going to do it in the constructor. As a result, the
+            # user can pass in any ``Module`` without having to worry about
+            # symbolic tracing APIs
+            gm = torch.fx.symbolic_trace(mod)
+            super().__init__(gm)
+
+            # We are going to store away two things here:
+            #
+            # 1. A list of total runtimes for ``mod``. In other words, we are
+            #    storing away the time ``mod(...)`` took each time this
+            #    interpreter is called.
+            self.total_runtime_sec : List[float] = []
+            # 2. A map from ``Node`` to a list of times (in seconds) that
+            #    node took to run. This can be seen as similar to (1) but
+            #    for specific sub-parts of the model.
+            self.runtimes_sec : Dict[torch.fx.Node, List[float]] = {}
+
+        ######################################################################
+        # Next, let's override our first method: ``run()``. ``Interpreter``'s ``run``
+        # method is the top-level entrypoint for execution of the model. We will
+        # want to intercept this so that we can record the total runtime of the
+        # model.
+
+        def run(self, *args) -> Any:
+            # Record the time we started running the model
+            t_start = time.time()
+            # Run the model by delegating back into Interpreter.run()
+            return_val = super().run(*args)
+            # Record the time we finished running the model
+            t_end = time.time()
+            # Store the total elapsed time this model execution took in the
+            # ProfilingInterpreter
+            self.total_runtime_sec.append(t_end - t_start)
+            return return_val
+
+        ######################################################################
+        # Now, let's override ``run_node``. ``Interpreter`` calls ``run_node`` each
+        # time it executes a single node. We will intercept this so that we
+        # can measure and record the time taken for each individual call in
+        # the model.
+
+        def run_node(self, n : torch.fx.Node) -> Any:
+            # Record the time we started running the op
+            t_start = time.time()
+            # Run the op by delegating back into Interpreter.run_node()
+            return_val = super().run_node(n)
+            # Record the time we finished running the op
+            t_end = time.time()
+            # If we don't have an entry for this node in our runtimes_sec
+            # data structure, add one with an empty list value.
+            self.runtimes_sec.setdefault(n, [])
+            # Record the total elapsed time for this single invocation
+            # in the runtimes_sec data structure
+            self.runtimes_sec[n].append(t_end - t_start)
+            return return_val
+
+        ######################################################################
+        # Finally, we are going to define a method (one which doesn't override
+        # any ``Interpreter`` method) that provides us a nice, organized view of
+        # the data we have collected.
+
+        def summary(self, should_sort : bool = False) -> str:
+            # Build up a list of summary information for each node
+            node_summaries : List[List[Any]] = []
+            # Calculate the mean runtime for the whole network. Because the
+            # network may have been called multiple times during profiling,
+            # we need to summarize the runtimes. We choose to use the
+            # arithmetic mean for this.
+            mean_total_runtime = statistics.mean(self.total_runtime_sec)
+
+            # For each node, record summary statistics
+            for node, runtimes in self.runtimes_sec.items():
+                # Similarly, compute the mean runtime for ``node``
+                mean_runtime = statistics.mean(runtimes)
+                # For easier understanding, we also compute the percentage
+                # time each node took with respect to the whole network.
+                pct_total = mean_runtime / mean_total_runtime * 100
+                # Record the node's type, name of the node, mean runtime, and
+                # percent runtim
+                node_summaries.append(
+                    [node.op, str(node), mean_runtime, pct_total])
+
+            # One of the most important questions to answer when doing performance
+            # profiling is "Which op(s) took the longest?". We can make this easy
+            # to see by providing sorting functionality in our summary view
+            if should_sort:
+                node_summaries.sort(key=lambda s: s[2], reverse=True)
+
+            # Use the ``tabulate`` library to create a well-formatted table
+            # presenting our summary information
+            headers : List[str] = [
+                'Op type', 'Op', 'Average runtime (s)', 'Pct total runtime'
+            ]
+            return tabulate.tabulate(node_summaries, headers=headers)
+
+
+
+
+
+
+
+.. note::
+      We use Python's ``time.time`` function to pull wall clock
+      timestamps and compare them. This is not the most accurate
+      way to measure performance, and will only give us a first-
+      order approximation. We use this simple technique only for the
+      purpose of demonstration in this tutorial.
+
+Investigating the Performance of ResNet18
+-----------------------------------------
+We can now use ``ProfilingInterpreter`` to inspect the performance
+characteristics of our ResNet18 model;
+
+
+.. code-block:: default
+
+
+    interp = ProfilingInterpreter(rn18)
+    interp.run(input)
+    print(interp.summary(True))
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Op type        Op                       Average runtime (s)    Pct total runtime
+    -------------  ---------------------  ---------------------  -------------------
+    call_module    maxpool                          0.0200095             14.2437
+    call_module    conv1                            0.0102513              7.29735
+    call_module    layer1_0_conv1                   0.00825381             5.87545
+    call_module    layer1_1_conv2                   0.00740123             5.26854
+    call_module    layer1_0_conv2                   0.00739789             5.26617
+    call_module    layer4_0_conv2                   0.00651073             4.63465
+    call_module    bn1                              0.00628757             4.47579
+    call_module    layer1_1_conv1                   0.0058651              4.17505
+    call_module    layer2_1_conv2                   0.00558329             3.97445
+    call_module    layer2_1_conv1                   0.00451565             3.21445
+    call_module    layer4_1_conv1                   0.00445008             3.16778
+    call_module    layer4_1_conv2                   0.00442004             3.1464
+    call_module    layer3_1_conv1                   0.00422287             3.00604
+    call_module    layer2_0_conv2                   0.00422001             3.004
+    call_module    layer3_0_conv2                   0.00415397             2.95699
+    call_module    layer3_1_conv2                   0.00405622             2.88741
+    call_module    layer4_0_conv1                   0.00392818             2.79627
+    call_module    layer2_0_conv1                   0.00373054             2.65557
+    call_module    layer3_0_conv1                   0.0030129              2.14472
+    call_module    layer1_0_bn2                     0.00195932             1.39474
+    call_module    layer1_1_bn2                     0.00190926             1.3591
+    call_function  add_2                            0.00177073             1.26049
+    call_module    layer1_0_bn1                     0.0017705              1.26032
+    call_function  add_1                            0.00142813             1.01661
+    call_module    layer2_1_bn1                     0.00126457             0.900182
+    call_module    layer2_1_bn2                     0.0012362              0.879986
+    call_module    layer2_0_downsample_0            0.000945807            0.67327
+    call_module    relu_1                           0.000746965            0.531725
+    call_function  add_4                            0.000720739            0.513056
+    call_module    layer3_0_downsample_0            0.000700474            0.49863
+    call_module    layer1_1_bn1                     0.000669718            0.476737
+    call_module    layer4_0_downsample_0            0.000558138            0.397309
+    call_module    layer2_0_bn1                     0.000355244            0.252879
+    call_module    layer2_0_bn2                     0.000350237            0.249315
+    call_module    layer2_0_downsample_1            0.000308037            0.219275
+    call_module    layer1_0_relu                    0.000307798            0.219105
+    call_function  add_3                            0.000296831            0.211298
+    call_module    fc                               0.000275612            0.196194
+    call_module    layer1_1_relu_1                  0.000220776            0.157159
+    call_module    layer1_0_relu_1                  0.000219822            0.15648
+    call_module    layer3_0_downsample_1            0.000219107            0.15597
+    call_module    layer3_0_bn1                     0.000213623            0.152067
+    call_module    layer1_1_relu                    0.00020957             0.149182
+    call_module    layer3_1_bn2                     0.000201941            0.143751
+    call_module    layer3_1_bn1                     0.00019598             0.139508
+    call_module    layer3_0_bn2                     0.000179768            0.127967
+    call_module    layer2_0_relu                    0.000175238            0.124742
+    call_module    layer2_1_relu                    0.000171423            0.122027
+    call_module    layer4_0_downsample_1            0.000169992            0.121009
+    call_module    layer2_0_relu_1                  0.000153542            0.109298
+    call_function  add_6                            0.000151634            0.10794
+    call_function  add_5                            0.00014782             0.105225
+    call_module    layer4_0_bn1                     0.000143766            0.10234
+    call_module    layer4_0_bn2                     0.000140905            0.100303
+    call_module    layer2_1_relu_1                  0.000138998            0.0989454
+    call_module    layer4_1_bn2                     0.000137568            0.0979271
+    call_module    layer4_1_bn1                     0.000133514            0.0950419
+    call_module    avgpool                          0.000119209            0.0848588
+    call_module    layer3_0_relu                    9.84669e-05            0.0700934
+    call_module    layer3_1_relu                    9.67979e-05            0.0689054
+    call_module    layer3_0_relu_1                  9.46522e-05            0.0673779
+    call_module    layer3_1_relu_1                  9.29832e-05            0.0661899
+    call_function  add_8                            8.29697e-05            0.0590617
+    call_function  add_7                            7.60555e-05            0.0541399
+    call_module    layer4_0_relu                    6.60419e-05            0.0470118
+    call_module    layer4_1_relu                    6.55651e-05            0.0466723
+    call_module    layer4_1_relu_1                  6.19888e-05            0.0441266
+    call_module    layer4_0_relu_1                  5.22137e-05            0.0371682
+    call_function  flatten_1                        2.74181e-05            0.0195175
+    placeholder    x                                1.43051e-05            0.0101831
+    output         output                           1.35899e-05            0.0096739
+
+
+There are two things we should call out here:
+
+* MaxPool2d takes up the most time. This is a known issue:
+  https://github.com/pytorch/pytorch/issues/51393
+* BatchNorm2d also takes up significant time. We can continue this
+  line of thinking and optimize this in the Conv-BN Fusion with FX
+  tutorial TODO: link
+
+
+Conclusion
+----------
+As we can see, using FX we can easily capture PyTorch programs (even
+ones we don't have the source code for!) in a machine-interpretable
+format and use that for analysis, such as the performance analysis
+we've done here. FX opens up an exiciting world of possibilities for
+working with PyTorch programs.
+
+Finally, since FX is still in beta, we would be happy to hear any
+feedback you have about using it. Please feel free to use the
+PyTorch Forums (TODO: forum topic) and the issue tracker
+(https://github.com/pytorch/pytorch/issues) to provide any feedback
+you might have.
+
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 0 minutes  0.668 seconds)
+
+
+.. _sphx_glr_download_beginner_fx_profiling_tutorial.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: fx_profiling_tutorial.py <fx_profiling_tutorial.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: fx_profiling_tutorial.ipynb <fx_profiling_tutorial.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.readthedocs.io>`_

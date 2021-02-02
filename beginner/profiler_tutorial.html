@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PyTorch Profiler &mdash; PyTorch Tutorials 1.7.1 documentation</title>
+  <title>PyTorch Profiler &mdash; PyTorch Tutorials 1.8.0.dev20210202+cpu documentation</title>
   
 
   
@@ -100,7 +100,7 @@
                   <span class="dropdown-title">torchtext</span>
                   <p></p>
                 </a>
-                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/docs/stable/torchvision/">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/vision/stable/index.html">
                   <span class="dropdown-title">torchvision</span>
                   <p></p>
                 </a>
@@ -181,7 +181,7 @@
               
               
                 <div class="version">
-                  1.7.1
+                  1.8.0.dev20210202+cpu
                 </div>
               
             
@@ -391,18 +391,18 @@ the backward pass operators launched with <code class="docutils literal notransl
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------
                              Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg    # of Calls
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------
-                  model_inference         1.63%       3.250ms        99.98%     199.229ms     199.229ms             1
-                     aten::conv2d         0.06%     112.012us        51.78%     103.183ms       5.159ms            20
-                aten::convolution         0.05%     104.613us        51.73%     103.071ms       5.154ms            20
-               aten::_convolution         0.13%     259.723us        51.67%     102.967ms       5.148ms            20
-         aten::mkldnn_convolution        51.16%     101.936ms        51.53%     102.679ms       5.134ms            20
-                 aten::batch_norm         0.05%      89.907us        34.47%      68.686ms       3.434ms            20
-     aten::_batch_norm_impl_index         0.06%     127.211us        34.43%      68.597ms       3.430ms            20
-          aten::native_batch_norm        22.28%      44.404ms        34.33%      68.402ms       3.420ms            20
-                     aten::select         9.15%      18.231ms        11.04%      22.002ms       3.056us          7200
-                 aten::max_pool2d         0.01%      14.302us        10.23%      20.391ms      20.391ms             1
+                  model_inference         1.55%       4.750ms        99.99%     305.912ms     305.912ms             1
+                     aten::conv2d         0.04%     135.300us        66.93%     204.782ms      10.239ms            20
+                aten::convolution         0.05%     138.003us        66.89%     204.646ms      10.232ms            20
+               aten::_convolution         0.07%     224.303us        66.85%     204.508ms      10.225ms            20
+         aten::mkldnn_convolution        66.69%     204.039ms        66.77%     204.284ms      10.214ms            20
+                 aten::batch_norm         0.04%     113.503us        22.36%      68.410ms       3.421ms            20
+     aten::_batch_norm_impl_index         0.08%     230.402us        22.32%      68.297ms       3.415ms            20
+          aten::native_batch_norm        14.13%      43.215ms        22.24%      68.036ms       3.402ms            20
+                     aten::select         5.98%      18.309ms         8.02%      24.549ms       3.410us          7200
+                 aten::max_pool2d         0.01%      24.700us         7.68%      23.495ms      23.495ms             1
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------
-Self CPU time total: 199.259ms
+Self CPU time total: 305.942ms
 </pre></div>
 </div>
 <p>The output will look like (omitting some columns):</p>
@@ -450,18 +450,18 @@ spent in children operator calls, while total cpu time includes it.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ---------------------------------------------
                              Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg    # of Calls                                   Input Shapes
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ---------------------------------------------
-                  model_inference         1.63%       3.250ms        99.98%     199.229ms     199.229ms             1                                             []
-                     aten::conv2d         0.01%      23.303us        14.99%      29.865ms       7.466ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
-                aten::convolution         0.01%      26.503us        14.98%      29.841ms       7.460ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
-               aten::_convolution         0.03%      61.004us        14.96%      29.815ms       7.454ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
-         aten::mkldnn_convolution        14.63%      29.154ms        14.93%      29.749ms       7.437ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
-                 aten::max_pool2d         0.01%      14.302us        10.23%      20.391ms      20.391ms             1        [[5, 64, 112, 112], [], [], [], [], []]
-                 aten::batch_norm         0.01%      21.802us        10.23%      20.382ms       4.076ms             5  [[5, 512, 7, 7], [512], [512], [512], [512],
-    aten::max_pool2d_with_indices        10.21%      20.353ms        10.23%      20.376ms      20.376ms             1        [[5, 64, 112, 112], [], [], [], [], []]
-     aten::_batch_norm_impl_index         0.01%      29.004us        10.22%      20.360ms       4.072ms             5  [[5, 512, 7, 7], [512], [512], [512], [512],
-          aten::native_batch_norm         4.42%       8.807ms        10.20%      20.316ms       4.063ms             5  [[5, 512, 7, 7], [512], [512], [512], [512],
+                  model_inference         1.55%       4.750ms        99.99%     305.912ms     305.912ms             1                                             []
+                     aten::conv2d         0.01%      26.000us        16.29%      49.828ms      12.457ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
+                aten::convolution         0.01%      35.101us        16.28%      49.802ms      12.450ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
+               aten::_convolution         0.02%      47.700us        16.27%      49.767ms      12.442ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
+         aten::mkldnn_convolution        16.24%      49.678ms        16.25%      49.719ms      12.430ms             4  [[5, 64, 56, 56], [64, 64, 3, 3], [], [], [],
+                     aten::conv2d         0.01%      17.400us        12.84%      39.289ms      13.096ms             3  [[5, 512, 7, 7], [512, 512, 3, 3], [], [], []
+                aten::convolution         0.01%      17.602us        12.84%      39.271ms      13.090ms             3  [[5, 512, 7, 7], [512, 512, 3, 3], [], [], []
+               aten::_convolution         0.01%      29.700us        12.83%      39.254ms      13.085ms             3  [[5, 512, 7, 7], [512, 512, 3, 3], [], [], []
+         aten::mkldnn_convolution        12.81%      39.191ms        12.82%      39.224ms      13.075ms             3  [[5, 512, 7, 7], [512, 512, 3, 3], [], [], []
+                     aten::conv2d         0.01%      18.500us        11.21%      34.281ms      11.427ms             3  [[5, 128, 28, 28], [128, 128, 3, 3], [], [],
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ---------------------------------------------
-Self CPU time total: 199.259ms
+Self CPU time total: 305.942ms
 </pre></div>
 </div>
 </div>
@@ -516,34 +516,34 @@ To enable memory profiling functionality pass <code class="docutils literal notr
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
                              Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
-                      aten::empty         0.21%     340.444us         0.21%     340.444us       2.746us      94.79 Mb      94.79 Mb           124
-                    aten::resize_         0.01%       9.702us         0.01%       9.702us       4.851us      11.48 Mb      11.48 Mb             2
-                      aten::addmm         0.11%     186.518us         0.12%     200.020us     200.020us      19.53 Kb      19.53 Kb             1
-              aten::empty_strided         0.00%       2.900us         0.00%       2.900us       2.900us           4 b           4 b             1
-                     aten::conv2d         0.06%     105.916us        48.96%      81.017ms       4.051ms      47.37 Mb           0 b            20
-                aten::convolution         0.06%     106.004us        48.90%      80.911ms       4.046ms      47.37 Mb           0 b            20
-               aten::_convolution         0.16%     260.329us        48.83%      80.805ms       4.040ms      47.37 Mb           0 b            20
-                 aten::contiguous         0.02%      26.900us         0.02%      26.900us       0.656us           0 b           0 b            41
-         aten::mkldnn_convolution        48.58%      80.378ms        48.66%      80.519ms       4.026ms      47.37 Mb           0 b            20
-                aten::as_strided_         0.02%      37.802us         0.02%      37.802us       1.890us           0 b           0 b            20
+                      aten::empty         0.15%     426.105us         0.15%     426.105us       4.097us      94.79 Mb      94.79 Mb           104
+                    aten::resize_         0.01%      26.500us         0.01%      26.500us      13.250us      11.48 Mb      11.48 Mb             2
+                      aten::addmm         0.10%     276.603us         0.11%     294.003us     294.003us      19.53 Kb      19.53 Kb             1
+                        aten::add         0.10%     290.702us         0.10%     290.702us      14.535us         160 b         160 b            20
+              aten::empty_strided         0.00%       3.800us         0.00%       3.800us       3.800us           4 b           4 b             1
+                     aten::conv2d         0.05%     125.403us        68.82%     191.655ms       9.583ms      47.37 Mb           0 b            20
+                aten::convolution         0.05%     130.702us        68.78%     191.530ms       9.576ms      47.37 Mb           0 b            20
+               aten::_convolution         0.08%     232.200us        68.73%     191.399ms       9.570ms      47.37 Mb           0 b            20
+         aten::mkldnn_convolution        68.57%     190.951ms        68.65%     191.167ms       9.558ms      47.37 Mb           0 b            20
+                aten::as_strided_         0.02%      48.200us         0.02%      48.200us       2.410us           0 b           0 b            20
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
-Self CPU time total: 165.468ms
+Self CPU time total: 278.471ms
 
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
                              Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
-                      aten::empty         0.21%     340.444us         0.21%     340.444us       2.746us      94.79 Mb      94.79 Mb           124
-                 aten::batch_norm         0.05%      83.505us        36.97%      61.167ms       3.058ms      47.41 Mb           0 b            20
-     aten::_batch_norm_impl_index         0.07%     116.814us        36.92%      61.083ms       3.054ms      47.41 Mb           0 b            20
-          aten::native_batch_norm        23.48%      38.848ms        36.81%      60.908ms       3.045ms      47.41 Mb           0 b            20
-                     aten::conv2d         0.06%     105.916us        48.96%      81.017ms       4.051ms      47.37 Mb           0 b            20
-                aten::convolution         0.06%     106.004us        48.90%      80.911ms       4.046ms      47.37 Mb           0 b            20
-               aten::_convolution         0.16%     260.329us        48.83%      80.805ms       4.040ms      47.37 Mb           0 b            20
-         aten::mkldnn_convolution        48.58%      80.378ms        48.66%      80.519ms       4.026ms      47.37 Mb           0 b            20
-                 aten::empty_like         0.04%      69.405us         0.08%     127.912us       6.396us      47.37 Mb           0 b            20
-                 aten::max_pool2d         0.00%       8.100us        12.01%      19.876ms      19.876ms      11.48 Mb           0 b             1
+                      aten::empty         0.15%     426.105us         0.15%     426.105us       4.097us      94.79 Mb      94.79 Mb           104
+                 aten::batch_norm         0.04%     111.102us        21.93%      61.062ms       3.053ms      47.41 Mb           0 b            20
+     aten::_batch_norm_impl_index         0.07%     185.301us        21.89%      60.951ms       3.048ms      47.41 Mb           0 b            20
+          aten::native_batch_norm        13.86%      38.600ms        21.81%      60.726ms       3.036ms      47.41 Mb           0 b            20
+                     aten::conv2d         0.05%     125.403us        68.82%     191.655ms       9.583ms      47.37 Mb           0 b            20
+                aten::convolution         0.05%     130.702us        68.78%     191.530ms       9.576ms      47.37 Mb           0 b            20
+               aten::_convolution         0.08%     232.200us        68.73%     191.399ms       9.570ms      47.37 Mb           0 b            20
+         aten::mkldnn_convolution        68.57%     190.951ms        68.65%     191.167ms       9.558ms      47.37 Mb           0 b            20
+                 aten::empty_like         0.03%      82.000us         0.07%     186.501us       9.325us      47.37 Mb           0 b            20
+                 aten::max_pool2d         0.00%       9.100us         7.73%      21.528ms      21.528ms      11.48 Mb           0 b             1
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
-Self CPU time total: 165.468ms
+Self CPU time total: 278.471ms
 </pre></div>
 </div>
 </div>
@@ -569,7 +569,7 @@ in Chrome (<code class="docutils literal notranslate"><span class="pre">chrome:/
 <li><a class="reference external" href="https://pytorch.org/tutorials/recipes/recipes/benchmark.html">PyTorch Benchmark</a></li>
 <li><a class="reference external" href="https://pytorch.org/tutorials/intermediate/tensorboard_tutorial.html">Visualizing models, data, and training with TensorBoard</a> tutorial</li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  2.519 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.122 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-beginner-profiler-tutorial-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" download="" href="../_downloads/840ca38c61d5c01b590641d98309aace/profiler_tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">profiler_tutorial.py</span></code></a></div>
@@ -848,7 +848,7 @@ in Chrome (<code class="docutils literal notranslate"><span class="pre">chrome:/
             </li>
 
             <li>
-              <a href="https://pytorch.org/docs/stable/torchvision/">torchvision</a>
+              <a href="https://pytorch.org/vision/stable/index.html">torchvision</a>
             </li>
 
             <li>

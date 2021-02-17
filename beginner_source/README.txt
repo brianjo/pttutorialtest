@@ -1,4 +1,4 @@
-.. _beginner_source-index:
+.. _beginner-index:
 
 Beginner Tutorials
 ------------------

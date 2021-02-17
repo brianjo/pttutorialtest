@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:04.743** total execution time for **beginner** files:
+**00:04.733** total execution time for **beginner** files:
 
-- **00:04.038**: :ref:`sphx_glr_beginner_profiler_tutorial.py` (``profiler_tutorial.py``)
-- **00:00.653**: :ref:`sphx_glr_beginner_fx_profiling_tutorial.py` (``fx_profiling_tutorial.py``)
-- **00:00.053**: :ref:`sphx_glr_beginner_example_tutorial.py` (``example_tutorial.py``)
+- **00:03.965**: :ref:`sphx_glr_beginner_profiler_tutorial.py` (``profiler_tutorial.py``)
+- **00:00.721**: :ref:`sphx_glr_beginner_fx_profiling_tutorial.py` (``fx_profiling_tutorial.py``)
+- **00:00.047**: :ref:`sphx_glr_beginner_example_tutorial.py` (``example_tutorial.py``)

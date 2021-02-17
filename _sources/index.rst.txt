@@ -19,5 +19,11 @@ Example
    :caption: Getting Started
 
    beginner/example_tutorial
+   
+ .. toctree::
+   :maxdepth: 2
+   :caption: Gallery
+
+   beginner/index
 
 

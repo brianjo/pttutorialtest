@@ -337,11 +337,11 @@ Tensors can also be used on a GPU to accelerate computing.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[-1.2929e-08,  4.5586e-41,  1.0280e-36],
-        [ 0.0000e+00, -2.7310e-33,  4.5586e-41],
-        [ 5.3958e-03,  1.5011e+35, -3.7990e-33],
-        [ 4.5586e-41, -2.7310e-33,  4.5586e-41],
-        [-7.5221e+21,  2.8828e-15, -2.1486e-09]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.7637e-03,  4.5696e-41,  5.8547e-36],
+        [ 0.0000e+00,  3.7226e-28,  4.5696e-41],
+        [ 5.0919e-36,  3.6340e+22,  5.2654e-28],
+        [ 4.5696e-41,  3.7226e-28,  4.5696e-41],
+        [ 5.4560e-37, -1.1219e-29,  2.9890e-04]])
 </pre></div>
 </div>
 <p>Construct a randomly initialized matrix:</p>
@@ -350,11 +350,11 @@ Tensors can also be used on a GPU to accelerate computing.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[0.7336, 0.7636, 0.2711],
-        [0.5789, 0.1103, 0.6991],
-        [0.7212, 0.0120, 0.9905],
-        [0.9622, 0.5552, 0.4287],
-        [0.6028, 0.6703, 0.1040]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[0.8475, 0.9317, 0.2220],
+        [0.7648, 0.3811, 0.1553],
+        [0.2656, 0.2916, 0.8818],
+        [0.1429, 0.6618, 0.6635],
+        [0.5294, 0.4458, 0.0521]])
 </pre></div>
 </div>
 <p>Construct a matrix filled zeros and of dtype long:</p>
@@ -395,11 +395,11 @@ new values are provided by user</p>
         [1., 1., 1.],
         [1., 1., 1.],
         [1., 1., 1.]], dtype=torch.float64)
-tensor([[ 0.0779, -1.6912,  0.9940],
-        [ 0.7730, -0.5552, -1.4334],
-        [ 1.0461,  1.7348,  1.3266],
-        [-0.8814, -0.4070, -1.5042],
-        [-0.4842, -1.0022,  1.2708]])
+tensor([[ 0.7103, -0.6844,  0.4777],
+        [ 0.5248, -2.5272,  1.0864],
+        [-0.2708,  0.1177,  0.4576],
+        [-0.3314, -2.1481, -0.1097],
+        [ 0.1411,  0.7629,  2.2398]])
 </pre></div>
 </div>
 <p>Get its size:</p>
@@ -425,11 +425,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
-        [ 1.1976, -0.0153, -1.1010],
-        [ 1.3619,  2.5995,  2.2922],
-        [-0.5033,  0.5837, -0.6593],
-        [ 0.1086, -0.9506,  1.6689]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.2434,  0.1061,  1.3834],
+        [ 1.1515, -2.1240,  1.8398],
+        [ 0.4496,  0.4275,  1.3765],
+        [-0.1072, -2.0729,  0.6186],
+        [ 0.8812,  1.4116,  2.9961]])
 </pre></div>
 </div>
 <p>Addition: syntax 2</p>
@@ -437,11 +437,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
-        [ 1.1976, -0.0153, -1.1010],
-        [ 1.3619,  2.5995,  2.2922],
-        [-0.5033,  0.5837, -0.6593],
-        [ 0.1086, -0.9506,  1.6689]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.2434,  0.1061,  1.3834],
+        [ 1.1515, -2.1240,  1.8398],
+        [ 0.4496,  0.4275,  1.3765],
+        [-0.1072, -2.0729,  0.6186],
+        [ 0.8812,  1.4116,  2.9961]])
 </pre></div>
 </div>
 <p>Addition: providing an output tensor as argument</p>
@@ -451,11 +451,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
-        [ 1.1976, -0.0153, -1.1010],
-        [ 1.3619,  2.5995,  2.2922],
-        [-0.5033,  0.5837, -0.6593],
-        [ 0.1086, -0.9506,  1.6689]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.2434,  0.1061,  1.3834],
+        [ 1.1515, -2.1240,  1.8398],
+        [ 0.4496,  0.4275,  1.3765],
+        [-0.1072, -2.0729,  0.6186],
+        [ 0.8812,  1.4116,  2.9961]])
 </pre></div>
 </div>
 <p>Addition: in-place</p>
@@ -465,11 +465,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
-        [ 1.1976, -0.0153, -1.1010],
-        [ 1.3619,  2.5995,  2.2922],
-        [-0.5033,  0.5837, -0.6593],
-        [ 0.1086, -0.9506,  1.6689]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.2434,  0.1061,  1.3834],
+        [ 1.1515, -2.1240,  1.8398],
+        [ 0.4496,  0.4275,  1.3765],
+        [-0.1072, -2.0729,  0.6186],
+        [ 0.8812,  1.4116,  2.9961]])
 </pre></div>
 </div>
 <div class="admonition note">
@@ -482,7 +482,7 @@ For example: <code class="docutils literal notranslate"><span class="pre">x.copy
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([-1.6912, -0.5552,  1.7348, -0.4070, -1.0022])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([-0.6844, -2.5272,  0.1177, -2.1481,  0.7629])
 </pre></div>
 </div>
 <p>Resizing: If you want to resize/reshape tensor, you can use <code class="docutils literal notranslate"><span class="pre">torch.view</span></code>:</p>
@@ -504,8 +504,8 @@ Python number</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([0.6873])
-0.6873379945755005
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([-0.4980])
+-0.49797943234443665
 </pre></div>
 </div>
 <p><strong>Read later:</strong></p>
@@ -587,7 +587,7 @@ NumPy and back.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">double</span><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.053 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.037 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-beginner-example-tutorial-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" download="" href="../_downloads/038fcdaa05eeae83e8058a0175f1e740/example_tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">example_tutorial.py</span></code></a></div>

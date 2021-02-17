@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>What is PyTorch? &mdash; PyTorch Tutorials 1.8.0.dev20210202+cpu documentation</title>
+  <title>What is PyTorch? &mdash; PyTorch Tutorials 1.9.0.dev20210217+cpu documentation</title>
   
 
   
@@ -54,6 +54,7 @@
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
 </head>
 
 <div class="container-fluid header-holder tutorials-header" id="header-holder">
@@ -182,7 +183,7 @@
               
               
                 <div class="version">
-                  1.8.0.dev20210202+cpu
+                  1.9.0.dev20210217+cpu
                 </div>
               
             
@@ -336,11 +337,11 @@ Tensors can also be used on a GPU to accelerate computing.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[1.4130e-08, 4.5695e-41, 1.4119e-08],
-        [4.5695e-41, 1.5295e-38, 0.0000e+00],
-        [1.4119e-08, 4.5695e-41, 1.5296e-38],
-        [0.0000e+00, 1.4119e-08, 4.5695e-41],
-        [1.5296e-38, 0.0000e+00, 1.4118e-08]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[-1.2929e-08,  4.5586e-41,  1.0280e-36],
+        [ 0.0000e+00, -2.7310e-33,  4.5586e-41],
+        [ 5.3958e-03,  1.5011e+35, -3.7990e-33],
+        [ 4.5586e-41, -2.7310e-33,  4.5586e-41],
+        [-7.5221e+21,  2.8828e-15, -2.1486e-09]])
 </pre></div>
 </div>
 <p>Construct a randomly initialized matrix:</p>
@@ -349,11 +350,11 @@ Tensors can also be used on a GPU to accelerate computing.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[0.1265, 0.1821, 0.4964],
-        [0.6485, 0.3274, 0.7140],
-        [0.4892, 0.2091, 0.8639],
-        [0.7576, 0.5548, 0.3347],
-        [0.7629, 0.5886, 0.8307]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[0.7336, 0.7636, 0.2711],
+        [0.5789, 0.1103, 0.6991],
+        [0.7212, 0.0120, 0.9905],
+        [0.9622, 0.5552, 0.4287],
+        [0.6028, 0.6703, 0.1040]])
 </pre></div>
 </div>
 <p>Construct a matrix filled zeros and of dtype long:</p>
@@ -394,11 +395,11 @@ new values are provided by user</p>
         [1., 1., 1.],
         [1., 1., 1.],
         [1., 1., 1.]], dtype=torch.float64)
-tensor([[-1.7005, -0.0479, -0.2700],
-        [ 0.7022,  0.7205, -1.3833],
-        [-0.9279, -0.2990,  0.6441],
-        [-0.4830, -0.9976, -0.2377],
-        [-0.7204, -0.4622, -0.8627]])
+tensor([[ 0.0779, -1.6912,  0.9940],
+        [ 0.7730, -0.5552, -1.4334],
+        [ 1.0461,  1.7348,  1.3266],
+        [-0.8814, -0.4070, -1.5042],
+        [-0.4842, -1.0022,  1.2708]])
 </pre></div>
 </div>
 <p>Get its size:</p>
@@ -424,11 +425,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[-0.9174,  0.5674,  0.5741],
-        [ 1.5061,  1.0907, -1.1987],
-        [-0.2379,  0.2831,  1.1650],
-        [-0.2102, -0.2847, -0.1047],
-        [ 0.2752,  0.3304,  0.0316]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
+        [ 1.1976, -0.0153, -1.1010],
+        [ 1.3619,  2.5995,  2.2922],
+        [-0.5033,  0.5837, -0.6593],
+        [ 0.1086, -0.9506,  1.6689]])
 </pre></div>
 </div>
 <p>Addition: syntax 2</p>
@@ -436,11 +437,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[-0.9174,  0.5674,  0.5741],
-        [ 1.5061,  1.0907, -1.1987],
-        [-0.2379,  0.2831,  1.1650],
-        [-0.2102, -0.2847, -0.1047],
-        [ 0.2752,  0.3304,  0.0316]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
+        [ 1.1976, -0.0153, -1.1010],
+        [ 1.3619,  2.5995,  2.2922],
+        [-0.5033,  0.5837, -0.6593],
+        [ 0.1086, -0.9506,  1.6689]])
 </pre></div>
 </div>
 <p>Addition: providing an output tensor as argument</p>
@@ -450,11 +451,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[-0.9174,  0.5674,  0.5741],
-        [ 1.5061,  1.0907, -1.1987],
-        [-0.2379,  0.2831,  1.1650],
-        [-0.2102, -0.2847, -0.1047],
-        [ 0.2752,  0.3304,  0.0316]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
+        [ 1.1976, -0.0153, -1.1010],
+        [ 1.3619,  2.5995,  2.2922],
+        [-0.5033,  0.5837, -0.6593],
+        [ 0.1086, -0.9506,  1.6689]])
 </pre></div>
 </div>
 <p>Addition: in-place</p>
@@ -464,11 +465,11 @@ example, we will take a look at the addition operation.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[-0.9174,  0.5674,  0.5741],
-        [ 1.5061,  1.0907, -1.1987],
-        [-0.2379,  0.2831,  1.1650],
-        [-0.2102, -0.2847, -0.1047],
-        [ 0.2752,  0.3304,  0.0316]])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3492, -1.5793,  1.1235],
+        [ 1.1976, -0.0153, -1.1010],
+        [ 1.3619,  2.5995,  2.2922],
+        [-0.5033,  0.5837, -0.6593],
+        [ 0.1086, -0.9506,  1.6689]])
 </pre></div>
 </div>
 <div class="admonition note">
@@ -481,7 +482,7 @@ For example: <code class="docutils literal notranslate"><span class="pre">x.copy
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([-0.0479,  0.7205, -0.2990, -0.9976, -0.4622])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([-1.6912, -0.5552,  1.7348, -0.4070, -1.0022])
 </pre></div>
 </div>
 <p>Resizing: If you want to resize/reshape tensor, you can use <code class="docutils literal notranslate"><span class="pre">torch.view</span></code>:</p>
@@ -503,8 +504,8 @@ Python number</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([-1.5238])
--1.5238252878189087
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>tensor([0.6873])
+0.6873379945755005
 </pre></div>
 </div>
 <p><strong>Read later:</strong></p>
@@ -586,7 +587,7 @@ NumPy and back.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">double</span><span class="p">))</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.043 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.053 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-beginner-example-tutorial-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" download="" href="../_downloads/038fcdaa05eeae83e8058a0175f1e740/example_tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">example_tutorial.py</span></code></a></div>
@@ -613,14 +614,18 @@ NumPy and back.</p>
 
   
 
-    <hr class="helpful-hr hr-top">
-      <div class="helpful-container">
-        <div class="helpful-question">Was this helpful?</div>
-        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
-        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
-        <div class="was-helpful-thank-you">Thank you</div>
+    <hr class="rating-hr hr-top">
+      <div class="rating-container">
+        <div class="rating-prompt">Rate this Tutorial</div>
+        <div class="stars-outer">
+          <i class="far fa-star" title="1 Star" data-behavior="tutorial-rating" data-count="1"></i>
+          <i class="far fa-star" title="2 Stars" data-behavior="tutorial-rating" data-count="2"></i>
+          <i class="far fa-star" title="3 Stars" data-behavior="tutorial-rating" data-count="3"></i>
+          <i class="far fa-star" title="4 Stars" data-behavior="tutorial-rating" data-count="4"></i>
+          <i class="far fa-star" title="5 Stars" data-behavior="tutorial-rating" data-count="5"></i>
+        </div>
       </div>
-    <hr class="helpful-hr hr-bottom"/>
+    <hr class="rating-hr hr-bottom"/>
 
   
 

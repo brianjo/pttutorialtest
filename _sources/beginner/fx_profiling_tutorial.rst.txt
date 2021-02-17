@@ -112,7 +112,8 @@ and examine.
 
  .. code-block:: none
 
-    graph(xx: torch.Tensor) -> torch.Tensor:
+    graph():
+        %x : torch.Tensor [#users=1] = placeholder[target=x]
         %conv1 : [#users=1] = call_module[target=conv1](args = (%x,), kwargs = {})
         %bn1 : [#users=1] = call_module[target=bn1](args = (%conv1,), kwargs = {})
         %relu_1 : [#users=1] = call_module[target=relu](args = (%bn1,), kwargs = {})
@@ -349,77 +350,77 @@ characteristics of our ResNet18 model;
 
     Op type        Op                       Average runtime (s)    Pct total runtime
     -------------  ---------------------  ---------------------  -------------------
-    call_module    maxpool                          0.0200095             14.2437
-    call_module    conv1                            0.0102513              7.29735
-    call_module    layer1_0_conv1                   0.00825381             5.87545
-    call_module    layer1_1_conv2                   0.00740123             5.26854
-    call_module    layer1_0_conv2                   0.00739789             5.26617
-    call_module    layer4_0_conv2                   0.00651073             4.63465
-    call_module    bn1                              0.00628757             4.47579
-    call_module    layer1_1_conv1                   0.0058651              4.17505
-    call_module    layer2_1_conv2                   0.00558329             3.97445
-    call_module    layer2_1_conv1                   0.00451565             3.21445
-    call_module    layer4_1_conv1                   0.00445008             3.16778
-    call_module    layer4_1_conv2                   0.00442004             3.1464
-    call_module    layer3_1_conv1                   0.00422287             3.00604
-    call_module    layer2_0_conv2                   0.00422001             3.004
-    call_module    layer3_0_conv2                   0.00415397             2.95699
-    call_module    layer3_1_conv2                   0.00405622             2.88741
-    call_module    layer4_0_conv1                   0.00392818             2.79627
-    call_module    layer2_0_conv1                   0.00373054             2.65557
-    call_module    layer3_0_conv1                   0.0030129              2.14472
-    call_module    layer1_0_bn2                     0.00195932             1.39474
-    call_module    layer1_1_bn2                     0.00190926             1.3591
-    call_function  add_2                            0.00177073             1.26049
-    call_module    layer1_0_bn1                     0.0017705              1.26032
-    call_function  add_1                            0.00142813             1.01661
-    call_module    layer2_1_bn1                     0.00126457             0.900182
-    call_module    layer2_1_bn2                     0.0012362              0.879986
-    call_module    layer2_0_downsample_0            0.000945807            0.67327
-    call_module    relu_1                           0.000746965            0.531725
-    call_function  add_4                            0.000720739            0.513056
-    call_module    layer3_0_downsample_0            0.000700474            0.49863
-    call_module    layer1_1_bn1                     0.000669718            0.476737
-    call_module    layer4_0_downsample_0            0.000558138            0.397309
-    call_module    layer2_0_bn1                     0.000355244            0.252879
-    call_module    layer2_0_bn2                     0.000350237            0.249315
-    call_module    layer2_0_downsample_1            0.000308037            0.219275
-    call_module    layer1_0_relu                    0.000307798            0.219105
-    call_function  add_3                            0.000296831            0.211298
-    call_module    fc                               0.000275612            0.196194
-    call_module    layer1_1_relu_1                  0.000220776            0.157159
-    call_module    layer1_0_relu_1                  0.000219822            0.15648
-    call_module    layer3_0_downsample_1            0.000219107            0.15597
-    call_module    layer3_0_bn1                     0.000213623            0.152067
-    call_module    layer1_1_relu                    0.00020957             0.149182
-    call_module    layer3_1_bn2                     0.000201941            0.143751
-    call_module    layer3_1_bn1                     0.00019598             0.139508
-    call_module    layer3_0_bn2                     0.000179768            0.127967
-    call_module    layer2_0_relu                    0.000175238            0.124742
-    call_module    layer2_1_relu                    0.000171423            0.122027
-    call_module    layer4_0_downsample_1            0.000169992            0.121009
-    call_module    layer2_0_relu_1                  0.000153542            0.109298
-    call_function  add_6                            0.000151634            0.10794
-    call_function  add_5                            0.00014782             0.105225
-    call_module    layer4_0_bn1                     0.000143766            0.10234
-    call_module    layer4_0_bn2                     0.000140905            0.100303
-    call_module    layer2_1_relu_1                  0.000138998            0.0989454
-    call_module    layer4_1_bn2                     0.000137568            0.0979271
-    call_module    layer4_1_bn1                     0.000133514            0.0950419
-    call_module    avgpool                          0.000119209            0.0848588
-    call_module    layer3_0_relu                    9.84669e-05            0.0700934
-    call_module    layer3_1_relu                    9.67979e-05            0.0689054
-    call_module    layer3_0_relu_1                  9.46522e-05            0.0673779
-    call_module    layer3_1_relu_1                  9.29832e-05            0.0661899
-    call_function  add_8                            8.29697e-05            0.0590617
-    call_function  add_7                            7.60555e-05            0.0541399
-    call_module    layer4_0_relu                    6.60419e-05            0.0470118
-    call_module    layer4_1_relu                    6.55651e-05            0.0466723
-    call_module    layer4_1_relu_1                  6.19888e-05            0.0441266
-    call_module    layer4_0_relu_1                  5.22137e-05            0.0371682
-    call_function  flatten_1                        2.74181e-05            0.0195175
-    placeholder    x                                1.43051e-05            0.0101831
-    output         output                           1.35899e-05            0.0096739
+    call_module    maxpool                          0.0240235            14.3889
+    call_module    conv1                            0.0111196             6.66007
+    call_module    layer4_0_conv2                   0.0108657             6.50799
+    call_module    layer1_0_conv1                   0.00965619            5.78356
+    call_module    layer1_1_conv2                   0.00931382            5.5785
+    call_module    layer1_0_conv2                   0.00900292            5.39229
+    call_module    layer2_0_conv1                   0.00868201            5.20008
+    call_module    layer1_1_conv1                   0.00752425            4.50664
+    call_module    bn1                              0.00642085            3.84576
+    call_module    layer2_1_conv2                   0.00598001            3.58172
+    call_module    layer3_0_conv2                   0.00538874            3.22758
+    call_module    layer4_1_conv2                   0.00519443            3.11119
+    call_module    layer4_1_conv1                   0.00518179            3.10362
+    call_module    layer3_1_conv2                   0.00513411            3.07506
+    call_module    layer2_1_conv1                   0.00505114            3.02537
+    call_module    layer2_0_conv2                   0.00484562            2.90228
+    call_module    layer3_1_conv1                   0.00478053            2.86329
+    call_module    layer3_0_conv1                   0.00428128            2.56427
+    call_module    layer4_0_conv1                   0.00376844            2.2571
+    call_module    layer1_1_bn1                     0.00211191            1.26493
+    call_module    layer1_1_bn2                     0.00185037            1.10827
+    call_module    layer1_0_bn2                     0.00184393            1.10442
+    call_function  add_2                            0.00159955            0.958048
+    call_function  add_1                            0.0013938             0.834811
+    call_module    layer2_0_downsample_0            0.000965118           0.578056
+    call_function  add_4                            0.000913382           0.547068
+    call_module    layer4_0_downsample_0            0.000837326           0.501515
+    call_module    layer3_0_downsample_0            0.000696659           0.417263
+    call_module    relu_1                           0.000658035           0.394129
+    call_module    layer1_0_bn1                     0.000574827           0.344292
+    call_module    layer2_0_bn1                     0.000408411           0.244617
+    call_module    layer2_0_bn2                     0.000355005           0.21263
+    call_module    layer2_1_bn1                     0.000321865           0.192781
+    call_module    layer2_0_downsample_1            0.000306845           0.183784
+    call_module    fc                               0.000300884           0.180214
+    call_module    layer2_1_bn2                     0.000291824           0.174788
+    call_function  add_3                            0.000262499           0.157223
+    call_module    layer3_0_bn1                     0.000240803           0.144228
+    call_module    layer1_1_relu                    0.000231981           0.138945
+    call_module    layer3_0_bn2                     0.000224829           0.134661
+    call_module    layer3_0_downsample_1            0.000219345           0.131376
+    call_module    layer3_1_bn1                     0.000216961           0.129948
+    call_module    layer3_1_bn2                     0.000212193           0.127092
+    call_module    layer1_0_relu                    0.000207901           0.124522
+    call_module    layer4_0_bn2                     0.000193357           0.115811
+    call_module    layer1_0_relu_1                  0.000192881           0.115526
+    call_module    layer1_1_relu_1                  0.000187397           0.112241
+    call_module    layer4_1_bn2                     0.000169277           0.101388
+    call_module    layer2_1_relu_1                  0.000165224           0.0989607
+    call_module    layer4_1_bn1                     0.000162601           0.0973899
+    call_module    layer4_0_bn1                     0.000159025           0.0952479
+    call_module    layer2_0_relu                    0.000157356           0.0942483
+    call_module    layer4_0_downsample_1            0.000151634           0.0908211
+    call_function  add_6                            0.000150681           0.0902499
+    call_module    layer2_0_relu_1                  0.000145197           0.0869655
+    call_function  add_5                            0.00013566            0.0812534
+    call_module    avgpool                          0.000121593           0.0728282
+    call_module    layer3_0_relu                    0.000119686           0.0716858
+    call_module    layer2_1_relu                    0.000113487           0.067973
+    call_module    layer3_1_relu                    0.000100374           0.060119
+    call_function  add_7                            9.41753e-05           0.0564062
+    call_function  add_8                            9.25064e-05           0.0554066
+    call_module    layer3_0_relu_1                  8.79765e-05           0.0526934
+    call_module    layer3_1_relu_1                  8.58307e-05           0.0514082
+    call_module    layer4_1_relu                    8.32081e-05           0.0498374
+    call_module    layer4_0_relu                    7.96318e-05           0.0476953
+    call_module    layer4_1_relu_1                  6.58035e-05           0.0394129
+    call_module    layer4_0_relu_1                  6.48499e-05           0.0388417
+    call_function  flatten_1                        3.14713e-05           0.0188497
+    placeholder    x                                1.5974e-05            0.00956763
+    output         output                           1.33514e-05           0.00799682
 
 
 There are two things we should call out here:
@@ -448,7 +449,7 @@ you might have.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.668 seconds)
+   **Total running time of the script:** ( 0 minutes  0.634 seconds)
 
 
 .. _sphx_glr_download_beginner_fx_profiling_tutorial.py:

@@ -1,6 +1,6 @@
 PyTorch Tutorials Experiments
 ============================= 
-Experiments in tutorials/sphinx. 
+Experiments in tutorials/sphinx. Please fork to test your own work. 
 
 Example
 ------------------

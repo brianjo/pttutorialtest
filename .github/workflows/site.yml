@@ -17,11 +17,11 @@ jobs:
         alias python=python3.8
         echo `python3 --version`
         sudo apt-get install -y python3-setuptools sox
-        pip3.8 install wheel boto3 requests
-        pip3.8 install --upgrade cython
-        pip3.8 install sox librosa
-        pip3.8 install -r requirements.txt
-        pip3.8 install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/test/cpu/torch_test.html
+        pip install wheel boto3 requests
+        pip install --upgrade cython
+        pip install sox librosa
+        pip install -r requirements.txt
+        pip install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/test/cpu/torch_test.html
     - name: Build the docset
       run: make html
       id: build     

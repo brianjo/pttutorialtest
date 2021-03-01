@@ -13,16 +13,17 @@ jobs:
             python-version: "${{ matrix.python-version }}"
     - name: Dependencies
       run: |
-        sudo add-apt-repository ppa:deadsnakes/ppa
-        sudo apt-get update
-        sudo apt-get install python3.8
+        # sudo add-apt-repository ppa:deadsnakes/ppa
+        # sudo apt-get update
+        # sudo apt-get install python3.8
+        alias python=python3.8
         echo `python3 --version`
         sudo apt-get install -y python3-setuptools sox
-        pip3 install wheel boto3 requests
-        pip3 install --upgrade cython
-        pip3 install sox librosa
-        pip3 install -r requirements.txt
-        pip3 install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/test/cpu/torch_test.html
+        pip3.8 install wheel boto3 requests
+        pip3.8 install --upgrade cython
+        pip3.8 install sox librosa
+        pip3.8 install -r requirements.txt
+        pip3.8 install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/test/cpu/torch_test.html
     - name: Build the docset
       run: make html
       id: build     

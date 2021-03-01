@@ -12,7 +12,7 @@ jobs:
     - name: Dependencies
       run: |
         echo `python3 --version`
-        sudo apt-get install -y python3-setuptools
+        sudo apt-get install -y python3-setuptools sox
         pip3 install wheel
         pip3 install --upgrade cython
         pip3 install -r requirements.txt

@@ -13,6 +13,9 @@ jobs:
             python-version: "${{ matrix.python-version }}"
     - name: Dependencies
       run: |
+        sudo add-apt-repository ppa:deadsnakes/ppa
+        sudo apt-get update
+        sudo apt-get install python3.8
         echo `python3 --version`
         sudo apt-get install -y python3-setuptools sox
         pip3 install wheel boto3 requests

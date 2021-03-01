@@ -13,7 +13,7 @@ jobs:
       run: |
         echo `python3 --version`
         sudo apt-get install -y python3-setuptools sox
-        pip3 install wheel
+        pip3 install wheel boto3 requests
         pip3 install --upgrade cython
         pip3 install -r requirements.txt
         pip3 install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html

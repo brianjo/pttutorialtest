@@ -1,0 +1,1869 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; PyTorch Tutorials 1.8.1+cpu documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://pytorch.org/" aria-label="PyTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/ecosystem">Ecosystem</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/mobile">Mobile</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li class="active">
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/docs/stable/index.html">
+                  <span class="dropdown-title">PyTorch</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/audio/stable/index.html">
+                  <span class="dropdown-title">torchaudio</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/text/stable/index.html">
+                  <span class="dropdown-title">torchtext</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/vision/stable/index.html">
+                  <span class="dropdown-title">torchvision</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/elastic/">
+                  <span class="dropdown-title">TorchElastic</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/serve/">
+                  <span class="dropdown-title">TorchServe</span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://pytorch.org/xla">
+                  <span class="dropdown-title">PyTorch on XLA Devices</span>
+                  <p></p>
+                </a>
+            </div>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="https://pytorch.org/features">
+                  <span class="dropdown-title">About</span>
+                  <p>Learn about PyTorch’s features and capabilities</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/#community-module">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/resources">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://discuss.pytorch.org/" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://pytorch.org/hub">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a href="https://github.com/pytorch/pytorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  1.8.1+cpu
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul class="simple">
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/beginner/audio_preprocessing_tutorial.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">beginner/audio_preprocessing_tutorial</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-beginner-audio-preprocessing-tutorial-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<p class="sphx-glr-example-title" id="sphx-glr-beginner-audio-preprocessing-tutorial-py">Draft - new tutorial.ipynb</p>
+<p>Automatically generated by Colaboratory.</p>
+<dl class="docutils">
+<dt>Original file is located at</dt>
+<dd><a class="reference external" href="https://colab.research.google.com/drive/1autKkGJocPQZmajnHogMa74_uwBSU34c">https://colab.research.google.com/drive/1autKkGJocPQZmajnHogMa74_uwBSU34c</a></dd>
+</dl>
+<p># Audio manipulation with torchaudio
+torchaudio provides powerful audio I/O mechanism, preprocessing transforms, dataset and models</p>
+<ul class="sphx-glr-horizontal">
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_001.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_001.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_002.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_002.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_003.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_003.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_004.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_004.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_005.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_005.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_006.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_006.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_007.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_007.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_008.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_008.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_009.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_009.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_010.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_010.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_011.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_011.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_012.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_012.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_013.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_013.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_014.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_014.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_015.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_015.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_016.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_016.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_017.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_017.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_018.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_018.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_019.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_019.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_020.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_020.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_021.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_021.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_022.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_022.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_023.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_023.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_024.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_024.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_025.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_025.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_026.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_026.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_027.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_027.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_028.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_028.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_029.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_029.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_030.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_030.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_031.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_031.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_032.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_032.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_033.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_033.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_034.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_034.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_035.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_035.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_036.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_036.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_037.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_037.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_038.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_038.png" />
+</li>
+<li><img alt="../_images/sphx_glr_audio_preprocessing_tutorial_039.png" class="sphx-glr-multi-img first" src="../_images/sphx_glr_audio_preprocessing_tutorial_039.png" />
+</li>
+</ul>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>1.8.1+cpu
+0.8.1
+----------
+Source: _sample.wav
+----------
+ - sample_rate: 44100
+ - num_channels: 2
+ - num_frames: 109368
+ - bits_per_sample: 16
+ - encoding: PCM_S
+
+----------
+Source: _sample.mp3
+----------
+ - sample_rate: 44100
+ - num_channels: 2
+ - num_frames: 110559
+ - bits_per_sample: 0
+ - encoding: MP3
+
+----------
+Source: https://pytorch-tutorial-assets.s3.amazonaws.com/steam-train-whistle-daniel_simon.wav
+----------
+ - sample_rate: 44100
+ - num_channels: 2
+ - num_frames: 109368
+ - bits_per_sample: 16
+ - encoding: PCM_S
+
+Fetched 4096 bytes.
+----------
+Source: https://pytorch-tutorial-assets.s3.amazonaws.com/steam-train-whistle-daniel_simon.mp3
+----------
+ - sample_rate: 44100
+ - num_channels: 2
+ - num_frames: 0
+ - bits_per_sample: 0
+ - encoding: MP3
+
+Sample Rate: 16000
+Shape: (1, 54400)
+Dtype: torch.float32
+ - Max:      0.668
+ - Min:     -1.000
+ - Mean:     0.000
+ - Std Dev:  0.122
+
+tensor([[0.0183, 0.0180, 0.0180,  ..., 0.0018, 0.0019, 0.0032]])
+
+&lt;IPython.lib.display.Audio object&gt;
+Fetching all the data...
+ - Fetched 108844 bytes
+Fetching until the requested frames are available...
+ - Fetched 65580 bytes
+Checking the resulting waveform ... matched!
+Sample Rate: 44100
+Shape: (1, 109368)
+Dtype: torch.float32
+ - Max:      0.508
+ - Min:     -0.449
+ - Mean:    -0.000
+ - Std Dev:  0.122
+
+tensor([[0.0027, 0.0063, 0.0092,  ..., 0.0032, 0.0047, 0.0052]])
+
+----------
+Source: save_example_default.wav
+----------
+ - File size: 437530 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 109368
+ - bits_per_sample: 32
+ - encoding: PCM_F
+
+----------
+Source: save_example_PCM_S16.wav
+----------
+ - File size: 218780 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 109368
+ - bits_per_sample: 16
+ - encoding: PCM_S
+
+----------
+Source: save_example.mp3
+----------
+ - File size: 20062 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 110559
+ - bits_per_sample: 0
+ - encoding: MP3
+
+----------
+Source: save_example.flac
+----------
+ - File size: 118673 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 109368
+ - bits_per_sample: 24
+ - encoding: FLAC
+
+----------
+Source: save_example.vorbis
+----------
+ - File size: 24365 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 109368
+ - bits_per_sample: 0
+ - encoding: VORBIS
+
+----------
+Source: save_example.sph
+----------
+ - File size: 438496 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 109368
+ - bits_per_sample: 32
+ - encoding: PCM_S
+
+----------
+Source: save_example.amb
+----------
+ - File size: 437530 bytes
+ - sample_rate: 44100
+ - num_channels: 1
+ - num_frames: 109368
+ - bits_per_sample: 32
+ - encoding: PCM_F
+
+----------
+Source: save_example.amr-nb
+----------
+ - File size: 5666 bytes
+ - sample_rate: 8000
+ - num_channels: 1
+ - num_frames: 109440
+ - bits_per_sample: 0
+ - encoding: AMR_NB
+
+----------
+Source: save_example.gsm
+----------
+ - File size: 22572 bytes
+ - sample_rate: 8000
+ - num_channels: 1
+ - num_frames: 0
+ - bits_per_sample: 0
+ - encoding: GSM
+
+b&#39;RIFF\x12\xad\x06\x00WAVEfmt &#39;
+----------
+Source: Original
+----------
+Sample Rate: 16000
+Shape: (1, 39680)
+Dtype: torch.float32
+ - Max:      0.506
+ - Min:     -0.452
+ - Mean:    -0.000
+ - Std Dev:  0.122
+
+tensor([[ 0.0030,  0.0104,  0.0128,  ..., -0.0038, -0.0012,  0.0039]])
+
+----------
+Source: Effects Applied
+----------
+Sample Rate: 16000
+Shape: (2, 49600)
+Dtype: torch.float32
+ - Max:      0.091
+ - Min:     -0.090
+ - Mean:    -0.000
+ - Std Dev:  0.021
+
+tensor([[0.0000, 0.0000, 0.0000,  ..., 0.0064, 0.0052, 0.0037],
+        [0.0000, 0.0000, 0.0000,  ..., 0.0085, 0.0085, 0.0085]])
+
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+Shape: (1, 513, 107)
+Dtype: torch.float32
+ - Max:     4000.533
+ - Min:      0.000
+ - Mean:     5.726
+ - Std Dev: 70.301
+
+tensor([[[7.8743e+00, 4.4462e+00, 5.6781e-01,  ..., 2.7694e+01,
+          8.9546e+00, 4.1289e+00],
+         [7.1094e+00, 3.2595e+00, 7.3520e-01,  ..., 1.7141e+01,
+          4.4812e+00, 8.0840e-01],
+         [3.8374e+00, 8.2490e-01, 3.0779e-01,  ..., 1.8502e+00,
+          1.1777e-01, 1.2369e-01],
+         ...,
+         [3.4708e-07, 1.0604e-05, 1.2395e-05,  ..., 7.4090e-06,
+          8.2063e-07, 1.0176e-05],
+         [4.7173e-05, 4.4329e-07, 3.9444e-05,  ..., 3.0622e-05,
+          3.9735e-07, 8.1572e-06],
+         [1.3221e-04, 1.6440e-05, 7.2536e-05,  ..., 5.4662e-05,
+          1.1663e-05, 2.5758e-06]]])
+
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+Mean Square Difference:  3.795462323290159e-17
+Mean Square Difference:  1.171839292268828e-10
+Mean Square Difference:  4.254469487818824e-08
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+&lt;IPython.lib.display.Audio object&gt;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ***************************************</span>
+<span class="c1"># RUN THIS CELL ONCE, COMMENT OUT THEM AND RESTART THE RUNTIME TO GET THE TORCHAUDIO RC</span>
+<span class="c1"># This is required until 0.8 is released.</span>
+<span class="c1"># warnings and errors are safe to ignore</span>
+<span class="c1"># ***************************************</span>
+<span class="c1"># !pip install --pre --ignore-installed torch torchaudio -f https://download.pytorch.org/whl/test/cpu/torch_test.html</span>
+<span class="c1"># !pip install boto3 requests</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchaudio</span>
+<span class="kn">import</span> <span class="nn">torchaudio.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">torchaudio.transforms</span> <span class="k">as</span> <span class="nn">T</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torchaudio</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;# Preparation&quot;&quot;&quot;</span>
+
+<span class="c1">#@title Prepare data and utility functions. {display-mode: &quot;form&quot;}</span>
+<span class="c1">#@markdown</span>
+<span class="c1">#@markdown You do not need to look into this cell.</span>
+<span class="c1">#@markdown Just execute once and you are good to go.</span>
+<span class="c1">#@markdown</span>
+<span class="c1">#@markdown In this tutorial, we will use a speech data from [VOiCES dataset](https://iqtlabs.github.io/voices/), which is licensed under Creative Commos BY 4.0.</span>
+
+<span class="c1">#-------------------------------------------------------------------------------</span>
+<span class="c1"># Preparation of data and helper functions.</span>
+<span class="c1">#-------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">librosa</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">from</span> <span class="nn">botocore</span> <span class="k">import</span> <span class="n">UNSIGNED</span>
+<span class="kn">from</span> <span class="nn">botocore.config</span> <span class="k">import</span> <span class="n">Config</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
+
+<span class="p">[</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">]</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">width</span> <span class="o">*</span> <span class="mf">2.7</span><span class="p">,</span> <span class="n">height</span><span class="p">]</span>
+
+<span class="n">SAMPLE_WAV_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pytorch-tutorial-assets.s3.amazonaws.com/steam-train-whistle-daniel_simon.wav&quot;</span>
+<span class="n">SAMPLE_WAV_PATH</span> <span class="o">=</span> <span class="s2">&quot;_sample.wav&quot;</span>
+
+<span class="n">SAMPLE_WAV_SPEECH_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pytorch-tutorial-assets.s3.amazonaws.com/VOiCES_devkit/source-16k/train/sp0307/Lab41-SRI-VOiCES-src-sp0307-ch127535-sg0042.wav&quot;</span>
+<span class="n">SAMPLE_WAV_SPEECH_PATH</span> <span class="o">=</span> <span class="s2">&quot;_sample_speech.wav&quot;</span>
+
+<span class="n">SAMPLE_MP3_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pytorch-tutorial-assets.s3.amazonaws.com/steam-train-whistle-daniel_simon.mp3&quot;</span>
+<span class="n">SAMPLE_MP3_PATH</span> <span class="o">=</span> <span class="s2">&quot;_sample.mp3&quot;</span>
+
+<span class="n">SAMPLE_TAR_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pytorch-tutorial-assets.s3.amazonaws.com/VOiCES_devkit.tar.gz&quot;</span>
+<span class="n">SAMPLE_TAR_PATH</span> <span class="o">=</span> <span class="s2">&quot;_sample.tar.gz&quot;</span>
+<span class="n">SAMPLE_TAR_ITEM</span> <span class="o">=</span> <span class="s2">&quot;VOiCES_devkit/source-16k/train/sp0307/Lab41-SRI-VOiCES-src-sp0307-ch127535-sg0042.wav&quot;</span>
+
+<span class="n">S3_BUCKET</span> <span class="o">=</span> <span class="s2">&quot;pytorch-tutorial-assets&quot;</span>
+<span class="n">S3_KEY</span> <span class="o">=</span> <span class="s2">&quot;VOiCES_devkit/source-16k/train/sp0307/Lab41-SRI-VOiCES-src-sp0307-ch127535-sg0042.wav&quot;</span>
+
+<span class="n">YESNO_DATASET_PATH</span> <span class="o">=</span> <span class="s2">&quot;./_dataset/yes_no&quot;</span>
+<span class="n">LJSPEECH_DATASET_PATH</span> <span class="o">=</span> <span class="s2">&quot;./_dataset/ljspeech&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">YESNO_DATASET_PATH</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">LJSPEECH_DATASET_PATH</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_fetch_data</span><span class="p">():</span>
+  <span class="n">uri</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">SAMPLE_WAV_URL</span><span class="p">,</span> <span class="n">SAMPLE_WAV_PATH</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">SAMPLE_WAV_SPEECH_URL</span><span class="p">,</span> <span class="n">SAMPLE_WAV_SPEECH_PATH</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">SAMPLE_MP3_URL</span><span class="p">,</span> <span class="n">SAMPLE_MP3_PATH</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">SAMPLE_TAR_URL</span><span class="p">,</span> <span class="n">SAMPLE_TAR_PATH</span><span class="p">),</span>
+  <span class="p">]</span>
+  <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">uri</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+      <span class="n">file_</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+
+<span class="n">_fetch_data</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_download_yesno</span><span class="p">():</span>
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">YESNO_DATASET_PATH</span><span class="p">,</span> <span class="s2">&quot;waves_yesno.tar.gz&quot;</span><span class="p">)):</span>
+    <span class="k">return</span>
+  <span class="n">torchaudio</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">YESNO</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">YESNO_DATASET_PATH</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_download_ljspeech</span><span class="p">():</span>
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LJSPEECH_DATASET_PATH</span><span class="p">,</span> <span class="s2">&quot;LJSpeech-1.1.tar.bz2&quot;</span><span class="p">)):</span>
+    <span class="k">return</span>
+  <span class="n">torchaudio</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">LJSPEECH</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">LJSPEECH_DATASET_PATH</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">YESNO_DOWNLOAD_PROCESS</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_download_yesno</span><span class="p">)</span>
+<span class="n">YESNO_DOWNLOAD_PROCESS</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="n">LJSPEECH_DOWNLOAD_PROCESS</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_download_ljspeech</span><span class="p">)</span>
+<span class="n">LJSPEECH_DOWNLOAD_PROCESS</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_get_sample</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">resample</span><span class="p">:</span>
+    <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">sox_effects</span><span class="o">.</span><span class="n">apply_effects_file</span><span class="p">(</span>
+        <span class="n">path</span><span class="p">,</span> <span class="n">effects</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{resample}</span><span class="s1">&#39;</span><span class="p">]])</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+  <span class="n">waveform</span> <span class="o">=</span> <span class="n">waveform</span><span class="p">[:</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span>
+
+
+<span class="k">def</span> <span class="nf">get_speech_sample</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">_get_sample</span><span class="p">(</span><span class="n">SAMPLE_WAV_SPEECH_PATH</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="n">resample</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_sample</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">_get_sample</span><span class="p">(</span><span class="n">SAMPLE_WAV_PATH</span><span class="p">,</span> <span class="n">resample</span><span class="o">=</span><span class="n">resample</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">print_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">src</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Source:&quot;</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; - sample_rate:&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; - num_channels:&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">num_channels</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; - num_frames:&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">num_frames</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; - bits_per_sample:&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">bits_per_sample</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; - encoding:&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">print_stats</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">src</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Source:&quot;</span><span class="p">,</span> <span class="n">src</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">sample_rate</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample Rate:&quot;</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape:&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">waveform</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dtype:&quot;</span><span class="p">,</span> <span class="n">waveform</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - Max:     {waveform.max().item():6.3f}&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - Min:     {waveform.min().item():6.3f}&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - Mean:    {waveform.mean().item():6.3f}&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - Std Dev: {waveform.std().item():6.3f}&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">waveform</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">plot_waveform</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;waveform&quot;</span><span class="p">):</span>
+  <span class="n">waveform</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+  <span class="n">num_channels</span><span class="p">,</span> <span class="n">num_frames</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+
+  <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">num_channels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_channels</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_axis</span><span class="p">,</span> <span class="n">waveform</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Channel {c+1}&#39;</span><span class="p">)</span>
+  <span class="n">figure</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span>
+
+
+<span class="k">def</span> <span class="nf">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+  <span class="n">waveform</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+  <span class="n">num_channels</span><span class="p">,</span> <span class="n">num_frames</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+
+  <span class="n">figure</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">num_channels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_channels</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">Fs</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">NFFT</span><span class="o">=</span><span class="n">n_fft</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Channel {c+1}&#39;</span><span class="p">)</span>
+  <span class="n">figure</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span> <span class="ow">or</span> <span class="n">f</span><span class="s2">&quot;Spectrogram: #FFT bins: </span><span class="si">{n_fft}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">):</span>
+  <span class="n">waveform</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+  <span class="n">num_channels</span><span class="p">,</span> <span class="n">num_frames</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span>
+  <span class="k">if</span> <span class="n">num_channels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">))</span>
+  <span class="k">elif</span> <span class="n">num_channels</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">((</span><span class="n">waveform</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">waveform</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">))</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Waveform with more than 2 channels are not supported.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">inspect_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Source:&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - File size: {os.path.getsize(path)} bytes&quot;</span><span class="p">)</span>
+  <span class="n">print_metadata</span><span class="p">(</span><span class="n">torchaudio</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">plot_spectrogram</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;freq_bin&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+  <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span> <span class="ow">or</span> <span class="s1">&#39;Spectrogram (db)&#39;</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frame&#39;</span><span class="p">)</span>
+  <span class="n">im</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">power_to_db</span><span class="p">(</span><span class="n">spec</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="n">aspect</span><span class="p">)</span>
+  <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_mel_fbank</span><span class="p">(</span><span class="n">fbank</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span> <span class="ow">or</span> <span class="s1">&#39;Filter bank&#39;</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fbank</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;frequency bin&#39;</span><span class="p">)</span>
+  <span class="n">axs</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;mel bin&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_spectrogram</span><span class="p">(</span>
+    <span class="n">n_fft</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="n">win_len</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hop_len</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+<span class="p">):</span>
+  <span class="n">waveform</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+  <span class="n">spectrogram</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Spectrogram</span><span class="p">(</span>
+      <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+      <span class="n">win_length</span><span class="o">=</span><span class="n">win_len</span><span class="p">,</span>
+      <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_len</span><span class="p">,</span>
+      <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">pad_mode</span><span class="o">=</span><span class="s2">&quot;reflect&quot;</span><span class="p">,</span>
+      <span class="n">power</span><span class="o">=</span><span class="n">power</span><span class="p">,</span>
+  <span class="p">)</span>
+  <span class="k">return</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">waveform</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">plot_pitch</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">pitch</span><span class="p">):</span>
+  <span class="n">figure</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Pitch Feature&quot;</span><span class="p">)</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">end_time</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample_rate</span>
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>  <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_axis</span><span class="p">,</span> <span class="n">waveform</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+  <span class="c1"># time_axis = torch.linspace(0, end_time, pitch.shape[1])</span>
+  <span class="c1"># ln1 = axis.plot(time_axis, pitch[0], linewidth=2, label=&#39;Pitch&#39;, color=&#39;green&#39;)</span>
+  <span class="c1"># axis.set_ylim((-1.3, 1.3))</span>
+
+  <span class="n">axis2</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">pitch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">ln2</span> <span class="o">=</span> <span class="n">axis2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+      <span class="n">time_axis</span><span class="p">,</span> <span class="n">pitch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pitch&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+  <span class="n">axis2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">plot_kaldi_pitch</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">nfcc</span><span class="p">):</span>
+  <span class="n">figure</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Kaldi Pitch Feature&quot;</span><span class="p">)</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="n">end_time</span> <span class="o">=</span> <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample_rate</span>
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>  <span class="n">waveform</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_axis</span><span class="p">,</span> <span class="n">waveform</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">pitch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">ln1</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_axis</span><span class="p">,</span> <span class="n">pitch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pitch&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">))</span>
+
+  <span class="n">axis2</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+  <span class="n">time_axis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">nfcc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">ln2</span> <span class="o">=</span> <span class="n">axis2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+      <span class="n">time_axis</span><span class="p">,</span> <span class="n">nfcc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NFCC&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+  <span class="n">lns</span> <span class="o">=</span> <span class="n">ln1</span> <span class="o">+</span> <span class="n">ln2</span>
+  <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lns</span><span class="p">]</span>
+  <span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">lns</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;# Audio I/O</span>
+
+<span class="sd">torchaudio integrates `libsox` and provides a rich set of audio I/O.</span>
+
+<span class="sd">## Quering audio metadata</span>
+
+<span class="sd">`torchaudio.info` function fetches metadata of audio. You can provide a path-like object or file-like object.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">SAMPLE_WAV_PATH</span><span class="p">)</span>
+<span class="n">print_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">SAMPLE_WAV_PATH</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;The values `encoding` can take are one of the following</span>
+<span class="sd">- `&quot;PCM_S&quot;`: Signed integer linear PCM</span>
+<span class="sd">- `&quot;PCM_U&quot;`: Unsigned integer linear PCM</span>
+<span class="sd">- `&quot;PCM_F&quot;`: Floating point linear PCM</span>
+<span class="sd">- `&quot;FLAC&quot;`: Flac, [Free Lossless Audio Codec](https://xiph.org/flac/)</span>
+<span class="sd">- `&quot;ULAW&quot;`: Mu-law, [[wikipedia](https://en.wikipedia.org/wiki/%CE%9C-law_algorithm)]</span>
+<span class="sd">- `&quot;ALAW&quot;`: A-law [[wikipedia](https://en.wikipedia.org/wiki/A-law_algorithm)]</span>
+<span class="sd">- `&quot;MP3&quot;` : MP3, MPEG-1 Audio Layer III</span>
+<span class="sd">- `&quot;VORBIS&quot;`: OGG Vorbis [[xiph.org](https://xiph.org/vorbis/)]</span>
+<span class="sd">- `&quot;AMR_WB&quot;`: Adaptive Multi-Rate [[wikipedia](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec)]</span>
+<span class="sd">- `&quot;AMR_NB&quot;`: Adaptive Multi-Rate Wideband [[wikipedia](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband)]</span>
+<span class="sd">- `&quot;OPUS&quot;`: Opus [[opus-codec.org](https://opus-codec.org/)]</span>
+<span class="sd">- `&quot;UNKNOWN&quot;` None of avobe</span>
+
+<span class="sd">**Note** When the detected audio format compresses samples, `bits_per_sample` is `0`. (For example: `&quot;mp3&quot;`)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">SAMPLE_MP3_PATH</span><span class="p">)</span>
+<span class="n">print_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">SAMPLE_MP3_PATH</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### Querying file-like object</span>
+
+<span class="sd">`info` function works on file-like object as well.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SAMPLE_WAV_URL</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+  <span class="n">metadata</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+<span class="n">print_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">SAMPLE_WAV_URL</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;**Note** When passing file-like object, `info` function does not read all the data, instead it only reads the beginning portion of data. Therefore, depending on the audio format, it cannot get the correct metadata. The following example illustrates this.</span>
+<span class="sd"> - Use `format` argument to tell what audio format it is.</span>
+<span class="sd"> - The returned metadata has `num_frames = 0`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SAMPLE_MP3_URL</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+  <span class="n">metadata</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;mp3&quot;</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Fetched {response.raw.tell()} bytes.&quot;</span><span class="p">)</span>
+<span class="n">print_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">SAMPLE_MP3_URL</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Loading audio data into Tensor</span>
+<span class="sd">To load audio data, you can use `torchaudio.load`.</span>
+
+<span class="sd">This function accepts path-like object and file-like object.</span>
+
+<span class="sd">The returned value is a tuple of waveform (`Tensor`) and sample rate (`int`).</span>
+
+<span class="sd">By default, the resulting tensor object has `dtype=torch.float32` and its value range is normalized within `[-1.0, 1.0]`.</span>
+
+<span class="sd">For the list of supported format, please refer to [the torchaudio documentation](https://pytorch.org/audio).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">SAMPLE_WAV_SPEECH_PATH</span><span class="p">)</span>
+
+<span class="n">print_stats</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">plot_waveform</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### Tips on slicing</span>
+
+<span class="sd">Providing `num_frames` and `frame_offset` arguments will slice the resulting Tensor object while decoding.</span>
+
+<span class="sd">The same result can be achieved using the regular Tensor slicing, (i.e. `waveform[:, frame_offset:frame_offset+num_frames]`) however, providing `num_frames` and `frame_offset` arguments is more efficient.</span>
+
+<span class="sd">This is because the function will stop data acquisition and decoding once it finishes decoding the requested frames. This is advantageous when the audio data are transfered via network as the data transfer will stop as soon as the necessary amount of data is fetched.</span>
+
+<span class="sd">The following example illustrates this;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Illustration of two different decoding methods.</span>
+<span class="c1"># The first one will fetch all the data and decode them, while</span>
+<span class="c1"># the second one will stop fetching data once it completes decoding.</span>
+<span class="c1"># The resulting waveforms are identical.</span>
+
+<span class="n">frame_offset</span><span class="p">,</span> <span class="n">num_frames</span> <span class="o">=</span> <span class="mi">16000</span><span class="p">,</span> <span class="mi">16000</span>  <span class="c1"># Fetch and decode the 1 - 2 seconds</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetching all the data...&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SAMPLE_WAV_SPEECH_URL</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+  <span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate1</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+  <span class="n">waveform1</span> <span class="o">=</span> <span class="n">waveform1</span><span class="p">[:,</span> <span class="n">frame_offset</span><span class="p">:</span><span class="n">frame_offset</span><span class="o">+</span><span class="n">num_frames</span><span class="p">]</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - Fetched {response.raw.tell()} bytes&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetching until the requested frames are available...&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SAMPLE_WAV_SPEECH_URL</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+  <span class="n">waveform2</span><span class="p">,</span> <span class="n">sample_rate2</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+      <span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">frame_offset</span><span class="o">=</span><span class="n">frame_offset</span><span class="p">,</span> <span class="n">num_frames</span><span class="o">=</span><span class="n">num_frames</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot; - Fetched {response.raw.tell()} bytes&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Checking the resulting waveform ... &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="p">(</span><span class="n">waveform1</span> <span class="o">==</span> <span class="n">waveform2</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;matched!&quot;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### Loading from file-like object</span>
+
+<span class="sd">`torchaudio`&#39;s I/O functions now support file-like object. This allows to fetch audio data and decode at the same time from the location other than local file system. The following examples illustrates this.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Load audio data as HTTP request</span>
+<span class="k">with</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SAMPLE_WAV_SPEECH_URL</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+  <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">raw</span><span class="p">)</span>
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;HTTP datasource&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load audio from tar file</span>
+<span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">SAMPLE_TAR_PATH</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tarfile_</span><span class="p">:</span>
+  <span class="n">fileobj</span> <span class="o">=</span> <span class="n">tarfile_</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">SAMPLE_TAR_ITEM</span><span class="p">)</span>
+  <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fileobj</span><span class="p">)</span>
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;TAR file&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load audio from S3</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="n">UNSIGNED</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="n">S3_BUCKET</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">S3_KEY</span><span class="p">)</span>
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Body&#39;</span><span class="p">])</span>
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;From S3&quot;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Saving audio to file</span>
+
+<span class="sd">To save audio data in the formats intepretable by common applications, you can use `torchaudio.save`.</span>
+
+<span class="sd">This function accepts path-like object and file-like object.</span>
+
+<span class="sd">When passing file-like object, you also need to provide `format` argument so that the function knows which format it should be using. In case of path-like object, the function will detemine the format based on the extension. If you are saving to a file without extension, you need to provide `format` argument.</span>
+
+<span class="sd">When saving as WAV format, the default encoding for `float32` Tensor is 32-bit floating-point PCM. You can provide `encoding` and `bits_per_sample` argument to change this. For example, to save data in 16 bit signed integer PCM, you can do the following.</span>
+
+<span class="sd">**Note** Saving data in encodings with lower bit depth reduces the resulting file size but loses precision.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_sample</span><span class="p">()</span>
+<span class="n">print_stats</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="c1"># Save without any encoding option.</span>
+<span class="c1"># The function will pick up the encoding which</span>
+<span class="c1"># the provided data fit</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;save_example_default.wav&quot;</span>
+<span class="n">torchaudio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">inspect_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c1"># Save as 16-bit signed integer Linear PCM</span>
+<span class="c1"># The resulting file occupies half the storage but loses precision</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;save_example_PCM_S16.wav&quot;</span>
+<span class="n">torchaudio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">,</span> <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;PCM_S&quot;</span><span class="p">,</span> <span class="n">bits_per_sample</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">inspect_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;`torchaudio.save` can also handle other formats. To name a few;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_sample</span><span class="p">()</span>
+
+<span class="n">formats</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s2">&quot;mp3&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;flac&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;vorbis&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;sph&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;amb&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;amr-nb&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;gsm&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="nb">format</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;save_example.</span><span class="si">{format}</span><span class="s2">&quot;</span>
+  <span class="n">torchaudio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">)</span>
+  <span class="n">inspect_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### Saving to file-like object</span>
+
+<span class="sd">Similar to the other I/O functions, you can save audio into file-like object. When saving to file-like object, `format` argument is required.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_sample</span><span class="p">()</span>
+
+<span class="c1"># Saving to Bytes buffer</span>
+<span class="n">buffer_</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">torchaudio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffer_</span><span class="p">,</span> <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+
+<span class="n">buffer_</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">buffer_</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
+
+<span class="sd">&quot;&quot;&quot;# Data Augmentation</span>
+
+<span class="sd">`torchaudio` provides a variety of ways to augment audio data.</span>
+
+<span class="sd">## Applying effects and filtering</span>
+
+<span class="sd">`torchaudio.sox_effects` module provides ways to apply filiters like `sox` command on Tensor objects and file-object audio sources directly.</span>
+
+<span class="sd">There are two functions for this;</span>
+
+<span class="sd"> - `torchaudio.sox_effects.apply_effects_tensor` for applying effects on Tensor</span>
+<span class="sd"> - `torchaudio.sox_effects.apply_effects_file` for applying effects on other audio source</span>
+
+<span class="sd">Both function takes effects in the form of `List[List[str]]`. This mostly corresponds to how `sox` command works, but one caveat is that `sox` command adds some effects automatically, but torchaudio&#39;s implementation does not do that.</span>
+
+<span class="sd">For the list of available effects, please refer to [the sox documentation](http://sox.sourceforge.net/sox.html).</span>
+
+<span class="sd">**Tip**</span>
+<span class="sd">If you need to load and resample your audio data on-the-fly, then you can use `torchaudio.sox_effects.apply_effects_file` with `&quot;rate&quot;` effect.</span>
+
+<span class="sd">**Note**</span>
+<span class="sd">`apply_effects_file` accepts file-like object or path-like object. Similar to `torchaudio.load`, when the audio format cannot be detected from either file extension or header, you can provide `format` argument to tell what format the audio source is.</span>
+
+<span class="sd">**Note**</span>
+<span class="sd">This process is not differentiable.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Load the data</span>
+<span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate1</span> <span class="o">=</span> <span class="n">get_sample</span><span class="p">(</span><span class="n">resample</span><span class="o">=</span><span class="mi">16000</span><span class="p">)</span>
+
+<span class="c1"># Define effects</span>
+<span class="n">effects</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s2">&quot;lowpass&quot;</span><span class="p">,</span> <span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="s2">&quot;300&quot;</span><span class="p">],</span> <span class="c1"># apply single-pole lowpass filter</span>
+  <span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="s2">&quot;0.8&quot;</span><span class="p">],</span>  <span class="c1"># reduce the speed</span>
+                     <span class="c1"># This only changes sample rate, so it is necessary to</span>
+                     <span class="c1"># add `rate` effect with original sample rate after this.</span>
+  <span class="p">[</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{sample_rate1}</span><span class="s2">&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;reverb&quot;</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">],</span>  <span class="c1"># Reverbration gives some dramatic feeling</span>
+<span class="p">]</span>
+
+<span class="c1"># Apply effects</span>
+<span class="n">waveform2</span><span class="p">,</span> <span class="n">sample_rate2</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">sox_effects</span><span class="o">.</span><span class="n">apply_effects_tensor</span><span class="p">(</span>
+    <span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate1</span><span class="p">,</span> <span class="n">effects</span><span class="p">)</span>
+
+<span class="n">plot_waveform</span><span class="p">(</span><span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate1</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">plot_waveform</span><span class="p">(</span><span class="n">waveform2</span><span class="p">,</span> <span class="n">sample_rate2</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Effects Applied&quot;</span><span class="p">)</span>
+<span class="n">print_stats</span><span class="p">(</span><span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate1</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">print_stats</span><span class="p">(</span><span class="n">waveform2</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate2</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;Effects Applied&quot;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;Note that the number of frames and number of channels are different from the original after the effects. Let&#39;s listen to the audio. Doesn&#39;t it sound more dramatic?&quot;&quot;&quot;</span>
+
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate1</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform1</span><span class="p">,</span> <span class="n">sample_rate1</span><span class="p">)</span>
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform2</span><span class="p">,</span> <span class="n">sample_rate2</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Effects Applied&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform2</span><span class="p">,</span> <span class="n">sample_rate2</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Applying codec to Tensor object</span>
+
+
+<span class="sd">`torchaudio.functional.apply_codec` can apply codecs to Tensor object.</span>
+
+<span class="sd">**Note**</span>
+<span class="sd">This process is not differentiable.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">(</span><span class="n">resample</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="n">configs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">({</span><span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s1">&#39;ULAW&#39;</span><span class="p">,</span> <span class="s2">&quot;bits_per_sample&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span> <span class="s2">&quot;8 bit mu-law&quot;</span><span class="p">),</span>
+    <span class="p">({</span><span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;compression&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">9</span><span class="p">},</span> <span class="s2">&quot;MP3 VBR lowest quality&quot;</span><span class="p">),</span>
+    <span class="p">({</span><span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;vorbis&quot;</span><span class="p">,</span> <span class="s2">&quot;compression&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span> <span class="s2">&quot;Vorbis lowest quality&quot;</span><span class="p">),</span>
+    <span class="p">({</span><span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;gsm&quot;</span><span class="p">},</span> <span class="s2">&quot;GSM&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
+  <span class="n">augmented</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">apply_codec</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="o">**</span><span class="n">param</span><span class="p">)</span>
+  <span class="n">plot_specgram</span><span class="p">(</span><span class="n">augmented</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+  <span class="n">play_audio</span><span class="p">(</span><span class="n">augmented</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Simulating telephony data</span>
+
+<span class="sd">Combining the previous techniques, we can create noisy data.</span>
+
+<span class="sd">Let&#39;s simulate telephone communication.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="c1"># Add background noise (white noise)</span>
+<span class="n">bg</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">waveform</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ratio</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">waveform</span> <span class="o">=</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">bg</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">ratio</span><span class="p">)</span> <span class="o">*</span> <span class="n">waveform</span>
+
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Background noise added&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="c1"># Apply filtering and change sample rate</span>
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">sox_effects</span><span class="o">.</span><span class="n">apply_effects_tensor</span><span class="p">(</span>
+  <span class="n">waveform</span><span class="p">,</span>
+  <span class="n">sample_rate</span><span class="p">,</span>
+  <span class="n">effects</span><span class="o">=</span><span class="p">[</span>
+      <span class="p">[</span><span class="s2">&quot;compand&quot;</span><span class="p">,</span> <span class="s2">&quot;0.02,0.05&quot;</span><span class="p">,</span> <span class="s2">&quot;-60,-60,-30,-10,-20,-8,-5,-8,-2,-8&quot;</span><span class="p">,</span> <span class="s2">&quot;-8&quot;</span><span class="p">,</span> <span class="s2">&quot;-7&quot;</span><span class="p">,</span> <span class="s2">&quot;0.05&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="s2">&quot;8000&quot;</span><span class="p">],</span>
+      <span class="p">[</span><span class="s2">&quot;remix&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">],</span>
+  <span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Filtered&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="c1"># Apply telephony codec</span>
+<span class="n">waveform</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">apply_codec</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;gsm&quot;</span><span class="p">)</span>
+
+<span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Codec Applied&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;# Feature Extractions</span>
+<span class="sd">`torchaudio` implements feature extractions commonly used in audio domain. They are available in `torchaudio.functional` and `torchaudio.transforms`.</span>
+
+<span class="sd">`functional` module implements features as a stand alone functions. They are stateless.</span>
+
+<span class="sd">`transforms` module implements features in object-oriented manner, using implementations from `functional` and `torch.nn.Module`.</span>
+
+<span class="sd">Because all the transforms are subclass of `torch.nn.Module`, they can be serialized using TorchScript.</span>
+
+<span class="sd">For the complete list of available features, please refer to the documentation. In this tutorial, we will look into conversion between time domain and frequency domain (`Spectrogram`, `GriffinLim`, `MelSpectrogram`) and augmentation technique called SpecAugment.</span>
+
+<span class="sd">## Spectrogram</span>
+
+<span class="sd">To get the frequency representation of audio signal, you can use `Spectrogram` transform.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+
+<span class="n">n_fft</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">win_length</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">hop_length</span> <span class="o">=</span> <span class="mi">512</span>
+
+<span class="c1"># define transformation</span>
+<span class="n">spectrogram</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Spectrogram</span><span class="p">(</span>
+    <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+    <span class="n">win_length</span><span class="o">=</span><span class="n">win_length</span><span class="p">,</span>
+    <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+    <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">pad_mode</span><span class="o">=</span><span class="s2">&quot;reflect&quot;</span><span class="p">,</span>
+    <span class="n">power</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># Perform transformation</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">waveform</span><span class="p">)</span>
+
+<span class="n">print_stats</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;torchaudio&#39;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## GriffinLim</span>
+
+<span class="sd">To recover a waveform from spectrogram, you can use `GriffinLim`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+<span class="n">plot_waveform</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="n">n_fft</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">win_length</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">hop_length</span> <span class="o">=</span> <span class="mi">512</span>
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Spectrogram</span><span class="p">(</span>
+    <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+    <span class="n">win_length</span><span class="o">=</span><span class="n">win_length</span><span class="p">,</span>
+    <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+<span class="p">)(</span><span class="n">waveform</span><span class="p">)</span>
+
+<span class="n">griffin_lim</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">GriffinLim</span><span class="p">(</span>
+    <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+    <span class="n">win_length</span><span class="o">=</span><span class="n">win_length</span><span class="p">,</span>
+    <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">waveform</span> <span class="o">=</span> <span class="n">griffin_lim</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+<span class="n">plot_waveform</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Reconstructed&quot;</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Mel Filter Bank</span>
+
+<span class="sd">`torchaudio.functional.create_fb_matrix` can generate the filter bank to convert frequency bins to Mel-scale bins.</span>
+
+<span class="sd">Since this function does not require input audio/features, there is no equivalent transform in `torchaudio.transforms`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">n_fft</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">n_mels</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">6000</span>
+
+<span class="n">mel_filters</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">create_fb_matrix</span><span class="p">(</span>
+    <span class="nb">int</span><span class="p">(</span><span class="n">n_fft</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span>
+    <span class="n">f_min</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+    <span class="n">f_max</span><span class="o">=</span><span class="n">sample_rate</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span>
+    <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;slaney&#39;</span>
+<span class="p">)</span>
+<span class="n">plot_mel_fbank</span><span class="p">(</span><span class="n">mel_filters</span><span class="p">,</span> <span class="s2">&quot;Mel Filter Bank - torchaudio&quot;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### Comparison against librosa</span>
+
+<span class="sd">As a comparison, here is the equivalent way to get the mel filter bank with `librosa`.</span>
+
+<span class="sd">**Note** Currently, the result matches only when `htk=True`. `torchaudio` does not support the equivalent of `htk=False` option.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">mel_filters_librosa</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">mel</span><span class="p">(</span>
+    <span class="n">sample_rate</span><span class="p">,</span>
+    <span class="n">n_fft</span><span class="p">,</span>
+    <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span>
+    <span class="n">fmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+    <span class="n">fmax</span><span class="o">=</span><span class="n">sample_rate</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;slaney&#39;</span><span class="p">,</span>
+    <span class="n">htk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">plot_mel_fbank</span><span class="p">(</span><span class="n">mel_filters_librosa</span><span class="p">,</span> <span class="s2">&quot;Mel Filter Bank - librosa&quot;</span><span class="p">)</span>
+
+<span class="n">mse</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">mel_filters</span> <span class="o">-</span> <span class="n">mel_filters_librosa</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Square Difference: &#39;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## MelSpectrogram</span>
+
+<span class="sd">Mel-scale spectrogram is a combination of Spectrogram and mel scale conversion. In `torchaudio`, there is a transform `MelSpectrogram` which is composed of `Spectrogram` and `MelScale`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+
+<span class="n">n_fft</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">win_length</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">hop_length</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">n_mels</span> <span class="o">=</span> <span class="mi">128</span>
+
+<span class="n">mel_spectrogram</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">MelSpectrogram</span><span class="p">(</span>
+    <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span>
+    <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+    <span class="n">win_length</span><span class="o">=</span><span class="n">win_length</span><span class="p">,</span>
+    <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+    <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">pad_mode</span><span class="o">=</span><span class="s2">&quot;reflect&quot;</span><span class="p">,</span>
+    <span class="n">power</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;slaney&#39;</span><span class="p">,</span>
+    <span class="n">onesided</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">melspec</span> <span class="o">=</span> <span class="n">mel_spectrogram</span><span class="p">(</span><span class="n">waveform</span><span class="p">)</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span>
+    <span class="n">melspec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;MelSpectrogram - torchaudio&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mel freq&#39;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### Comparison against librosa</span>
+
+<span class="sd">As a comparison, here is the equivalent way to get Mel-scale spectrogram with `librosa`.</span>
+
+<span class="sd">**Note** Currently, the result matches only when `htk=True`. `torchaudio` does not support the equivalent of `htk=False` option.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">melspec_librosa</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span>
+    <span class="n">waveform</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span>
+    <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+    <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+    <span class="n">win_length</span><span class="o">=</span><span class="n">win_length</span><span class="p">,</span>
+    <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">pad_mode</span><span class="o">=</span><span class="s2">&quot;reflect&quot;</span><span class="p">,</span>
+    <span class="n">power</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;slaney&#39;</span><span class="p">,</span>
+    <span class="n">htk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span>
+    <span class="n">melspec_librosa</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;MelSpectrogram - librosa&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mel freq&#39;</span><span class="p">)</span>
+
+<span class="n">mse</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">melspec</span> <span class="o">-</span> <span class="n">melspec_librosa</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Square Difference: &#39;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## MFCC&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+
+<span class="n">n_fft</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="n">win_length</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">hop_length</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">n_mels</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">n_mfcc</span> <span class="o">=</span> <span class="mi">256</span>
+
+<span class="n">mfcc_transform</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span>
+    <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span>
+    <span class="n">n_mfcc</span><span class="o">=</span><span class="n">n_mfcc</span><span class="p">,</span> <span class="n">melkwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_fft&#39;</span><span class="p">:</span> <span class="n">n_fft</span><span class="p">,</span> <span class="s1">&#39;n_mels&#39;</span><span class="p">:</span> <span class="n">n_mels</span><span class="p">,</span> <span class="s1">&#39;hop_length&#39;</span><span class="p">:</span> <span class="n">hop_length</span><span class="p">})</span>
+
+<span class="n">mfcc</span> <span class="o">=</span> <span class="n">mfcc_transform</span><span class="p">(</span><span class="n">waveform</span><span class="p">)</span>
+
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">mfcc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="sd">&quot;&quot;&quot;### Comparing against librosa</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">melspec</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span>
+  <span class="n">y</span><span class="o">=</span><span class="n">waveform</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span>
+  <span class="n">win_length</span><span class="o">=</span><span class="n">win_length</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+  <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span> <span class="n">htk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">mfcc_librosa</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span>
+  <span class="n">S</span><span class="o">=</span><span class="n">librosa</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">spectrum</span><span class="o">.</span><span class="n">power_to_db</span><span class="p">(</span><span class="n">melspec</span><span class="p">),</span>
+  <span class="n">n_mfcc</span><span class="o">=</span><span class="n">n_mfcc</span><span class="p">,</span> <span class="n">dct_type</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;ortho&#39;</span><span class="p">)</span>
+
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">mfcc_librosa</span><span class="p">)</span>
+
+<span class="n">mse</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">mfcc</span> <span class="o">-</span> <span class="n">mfcc_librosa</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Square Difference: &#39;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Pitch&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">()</span>
+
+<span class="n">pitch</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">detect_pitch_frequency</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">plot_pitch</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## Kaldi Pitch (beta)</span>
+
+<span class="sd">Kaldi Pitch feature [1] is pitch detection mechanism tuned for ASR application. This is a beta feature in torchaudio, and only `functional` form is available.</span>
+
+<span class="sd">1. A pitch extraction algorithm tuned for automatic speech recognition</span>
+
+<span class="sd">   Ghahremani, B. BabaAli, D. Povey, K. Riedhammer, J. Trmal and S. Khudanpur</span>
+
+<span class="sd">   2014 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Florence, 2014, pp. 2494-2498, doi: 10.1109/ICASSP.2014.6854049. [[abstract](https://ieeexplore.ieee.org/document/6854049)], [[paper](https://danielpovey.com/files/2014_icassp_pitch.pdf)]</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">get_speech_sample</span><span class="p">(</span><span class="n">resample</span><span class="o">=</span><span class="mi">16000</span><span class="p">)</span>
+
+<span class="n">pitch_feature</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">compute_kaldi_pitch</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">pitch</span><span class="p">,</span> <span class="n">nfcc</span> <span class="o">=</span> <span class="n">pitch_feature</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pitch_feature</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">plot_kaldi_pitch</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">nfcc</span><span class="p">)</span>
+<span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;## SpecAugment</span>
+
+<span class="sd">[SpecAugment](https://ai.googleblog.com/2019/04/specaugment-new-data-augmentation.html) is a popular augmentation technique applied on spectrogram.</span>
+
+<span class="sd">`torchaudio` implements `TimeStrech`, `TimeMasking` and `FrequencyMasking`.</span>
+
+<span class="sd">### TimeStrech</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">get_spectrogram</span><span class="p">(</span><span class="n">power</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">strech</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TimeStretch</span><span class="p">()</span>
+
+<span class="n">rate</span> <span class="o">=</span> <span class="mf">1.2</span>
+<span class="n">spec_</span> <span class="o">=</span> <span class="n">strech</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">complex_norm</span><span class="p">(</span><span class="n">spec_</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">title</span><span class="o">=</span><span class="n">f</span><span class="s2">&quot;Stretched x</span><span class="si">{rate}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">complex_norm</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="n">rate</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="n">spec_</span> <span class="o">=</span> <span class="n">strech</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">complex_norm</span><span class="p">(</span><span class="n">spec_</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">title</span><span class="o">=</span><span class="n">f</span><span class="s2">&quot;Stretched x</span><span class="si">{rate}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### TimeMasking&quot;&quot;&quot;</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">get_spectrogram</span><span class="p">()</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+
+<span class="n">masking</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TimeMasking</span><span class="p">(</span><span class="n">time_mask_param</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="n">masking</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Masked along time axis&quot;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;### FrequencyMasking&quot;&quot;&quot;</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">get_spectrogram</span><span class="p">()</span>
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Original&quot;</span><span class="p">)</span>
+
+<span class="n">masking</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">FrequencyMasking</span><span class="p">(</span><span class="n">freq_mask_param</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="n">masking</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+<span class="n">plot_spectrogram</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Masked along frequency axis&quot;</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;# Datasets</span>
+
+<span class="sd">`torchaudio` provides easy access to common, publicly accessible datasets. Please checkout the official documentation for the list of available datasets.</span>
+
+<span class="sd">Here, we take `YESNO` dataset and look into how to use it.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">YESNO_DOWNLOAD_PROCESS</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">torchaudio</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">YESNO</span><span class="p">(</span><span class="n">YESNO_DATASET_PATH</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+  <span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+  <span class="n">plot_specgram</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">f</span><span class="s2">&quot;Sample </span><span class="si">{i}</span><span class="s2">: </span><span class="si">{label}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">play_audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  21.162 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-beginner-audio-preprocessing-tutorial-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/7bcd2d5021074b5ce35ce87decddceb4/audio_preprocessing_tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">audio_preprocessing_tutorial.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../_downloads/bbc714e1c0bf9ead4ddc7026c5d1d6d5/audio_preprocessing_tutorial.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">audio_preprocessing_tutorial.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr class="rating-hr hr-top">
+      <div class="rating-container">
+        <div class="rating-prompt">Rate this Tutorial</div>
+        <div class="stars-outer">
+          <i class="far fa-star" title="1 Star" data-behavior="tutorial-rating" data-count="1"></i>
+          <i class="far fa-star" title="2 Stars" data-behavior="tutorial-rating" data-count="2"></i>
+          <i class="far fa-star" title="3 Stars" data-behavior="tutorial-rating" data-count="3"></i>
+          <i class="far fa-star" title="4 Stars" data-behavior="tutorial-rating" data-count="4"></i>
+          <i class="far fa-star" title="5 Stars" data-behavior="tutorial-rating" data-count="5"></i>
+        </div>
+      </div>
+    <hr class="rating-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, PyTorch.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul class="simple">
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script type="text/javascript" src="../_static/jquery.js"></script>
+         <script type="text/javascript" src="../_static/underscore.js"></script>
+         <script type="text/javascript" src="../_static/doctools.js"></script>
+         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-90545585-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://pytorch.org/docs/stable/index.html">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://pytorch.org/tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://pytorch.org/resources">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://pytorch.org/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/">PyTorch</a></li>
+            <li><a href="https://pytorch.org/get-started">Get Started</a></li>
+            <li><a href="https://pytorch.org/features">Features</a></li>
+            <li><a href="https://pytorch.org/ecosystem">Ecosystem</a></li>
+            <li><a href="https://pytorch.org/blog/">Blog</a></li>
+            <li><a href="https://github.com/pytorch/pytorch/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://pytorch.org/resources">Resources</a></li>
+            <li><a href="https://pytorch.org/tutorials">Tutorials</a></li>
+            <li><a href="https://pytorch.org/docs/stable/index.html">Docs</a></li>
+            <li><a href="https://discuss.pytorch.org" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/pytorch/pytorch/issues" target="_blank">Github Issues</a></li>
+            <li><a href="https://pytorch.org/assets/brand-guidelines/PyTorch-Brand-Guidelines.pdf" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="https://www.facebook.com/pytorch" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/pytorch" target="_blank" class="twitter"></a>
+            <a href="https://www.youtube.com/pytorch" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. As the current maintainers of this site, Facebook’s Cookies Policy applies. Learn more, including about available controls: <a href="https://www.facebook.com/policies/cookies/">Cookies Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://pytorch.org/" aria-label="PyTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://pytorch.org/get-started">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/ecosystem">Ecosystem</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/mobile">Mobile</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/hub">PyTorch Hub</a>
+          </li>
+
+          <li>
+            <a href="https://pytorch.org/blog/">Blog</a>
+          </li>
+
+          <li class="active">
+            <a href="https://pytorch.org/tutorials">Tutorials</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Docs
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch.org/docs/stable/index.html">PyTorch</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/audio/stable/index.html">torchaudio</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/text/stable/index.html">torchtext</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/vision/stable/index.html">torchvision</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/elastic/">TorchElastic</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/serve/">TorchServe</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/xla">PyTorch on XLA Devices</a>
+            </li>
+          </ul>
+
+          <li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://pytorch.org/resources">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/features">About</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/hub">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="https://pytorch.org/#community-module">Community</a>
+            </li>
+
+            <li>
+              <a href="https://discuss.pytorch.org/">Forums</a>
+            </li>
+          </ul>
+
+          <li>
+            <a href="https://github.com/pytorch/pytorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

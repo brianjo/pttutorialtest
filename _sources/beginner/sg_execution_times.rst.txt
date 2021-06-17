@@ -5,9 +5,7 @@
 
 Computation times
 =================
-**00:26.757** total execution time for **beginner** files:
+**00:01.792** total execution time for **beginner** files:
 
-- **00:21.162**: :ref:`sphx_glr_beginner_audio_preprocessing_tutorial.py` (``audio_preprocessing_tutorial.py``)
-- **00:04.673**: :ref:`sphx_glr_beginner_profiler_tutorial.py` (``profiler_tutorial.py``)
-- **00:00.842**: :ref:`sphx_glr_beginner_fx_profiling_tutorial.py` (``fx_profiling_tutorial.py``)
-- **00:00.080**: :ref:`sphx_glr_beginner_example_tutorial.py` (``example_tutorial.py``)
+- **00:01.723**: :ref:`sphx_glr_beginner_recipe_tutorial.py` (``recipe_tutorial.py``)
+- **00:00.069**: :ref:`sphx_glr_beginner_example_tutorial.py` (``example_tutorial.py``)

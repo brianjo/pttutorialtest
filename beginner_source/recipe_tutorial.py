@@ -40,7 +40,7 @@ Before we begin, we need to install ``torchaudio`` to have access to the
 dataset.
 
 ```
-   pip install torchaudio
+   ## pip install torchaudio
 ```
 
 Steps
@@ -60,7 +60,7 @@ what built-in datasets you use, you can also install and import
 """
 
 # Uncomment the line below to enable this in Google Colab
-!pip install torch torchaudio torchvision torchtext
+# !pip install torch torchaudio torchvision torchtext
 
 import torch
 import torchaudio

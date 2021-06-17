@@ -62,7 +62,7 @@ dataset.
 # 
 
 # Uncomment the line below to enable this in Google Colab
-!pip install torch torchaudio torchvision torchtext
+# !pip install torch torchaudio torchvision torchtext
 
 import torch
 import torchaudio

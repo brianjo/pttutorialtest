@@ -17,6 +17,8 @@ flask
 spacy==2.3.2
 ray[tune]
 cython
+timm 
+requests
 
 # PyTorch Theme
 -e git+git://github.com/pytorch/pytorch_sphinx_theme.git#egg=pytorch_sphinx_theme

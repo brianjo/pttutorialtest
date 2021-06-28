@@ -5,7 +5,8 @@
 
 Computation times
 =================
-**00:02.533** total execution time for **beginner** files:
+**00:34.604** total execution time for **beginner** files:
 
-- **00:02.442**: :ref:`sphx_glr_beginner_recipe_tutorial.py` (``recipe_tutorial.py``)
-- **00:00.091**: :ref:`sphx_glr_beginner_example_tutorial.py` (``example_tutorial.py``)
+- **00:32.847**: :ref:`sphx_glr_beginner_vt_tutorial.py` (``vt_tutorial.py``)
+- **00:01.679**: :ref:`sphx_glr_beginner_recipe_tutorial.py` (``recipe_tutorial.py``)
+- **00:00.078**: :ref:`sphx_glr_beginner_example_tutorial.py` (``example_tutorial.py``)

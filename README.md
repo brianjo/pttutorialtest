@@ -26,7 +26,7 @@ Your files will be built into `_builds/html`. You can test with Python by runnin
 
 ## Using GitHub Actions
 
-As an alternatie to building locally you can do the following. 
+As an alternative to building locally you can do the following. 
 
 * Fork this repo.
 * Drop a new tutorial in beginner_source.

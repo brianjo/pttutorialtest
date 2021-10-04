@@ -231,10 +231,12 @@ containing tensors representing our waveform, sample rate, and labels.
 
  .. code-block:: none
 
-    Data:  [tensor([[[0.0004, 0.0005, 0.0006,  ..., 0.0016, 0.0019, 0.0017]]]), tensor([8000]), [tensor([1]), tensor([1]), tensor([0]), tensor([0]), tensor([0]), tensor([0]), tensor([0]), tensor([1])]]
-    Waveform: tensor([[[0.0004, 0.0005, 0.0006,  ..., 0.0016, 0.0019, 0.0017]]])
+    Data:  [tensor([[[3.0518e-05, 6.1035e-05, 3.0518e-05,  ..., 2.5024e-03,
+              1.9531e-03, 2.2278e-03]]]), tensor([8000]), [tensor([0]), tensor([1]), tensor([0]), tensor([1]), tensor([1]), tensor([0]), tensor([1]), tensor([0])]]
+    Waveform: tensor([[[3.0518e-05, 6.1035e-05, 3.0518e-05,  ..., 2.5024e-03,
+              1.9531e-03, 2.2278e-03]]])
     Sample rate: tensor([8000])
-    Labels: [tensor([1]), tensor([1]), tensor([0]), tensor([0]), tensor([0]), tensor([0]), tensor([0]), tensor([1])]
+    Labels: [tensor([0]), tensor([1]), tensor([0]), tensor([1]), tensor([1]), tensor([0]), tensor([1]), tensor([0])]
 
 
 5. [Optional] Visualize the data
@@ -269,7 +271,8 @@ from your ``DataLoader``.
 
  .. code-block:: none
 
-    [[0.00042725 0.00048828 0.00064087 ... 0.00164795 0.00189209 0.00167847]]
+    [[3.0517578e-05 6.1035156e-05 3.0517578e-05 ... 2.5024414e-03
+      1.9531250e-03 2.2277832e-03]]
 
 
 Congratulations! You have successfully loaded data in PyTorch.
@@ -286,7 +289,7 @@ Take a look at these other recipes to continue your learning:
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.298 seconds)
+   **Total running time of the script:** ( 0 minutes  1.799 seconds)
 
 
 .. _sphx_glr_download_beginner_recipe_tutorial.py:

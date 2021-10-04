@@ -341,11 +341,11 @@ the optimized-quantized-and-scripted model - run the code below:
 
  .. code-block:: none
 
-    original model: 341.31ms
-    scripted model: 385.95ms
-    scripted & quantized model: 249.84ms
-    scripted & quantized & optimized model: 208.38ms
-    lite model: 210.41ms
+    original model: 372.10ms
+    scripted model: 422.44ms
+    scripted & quantized model: 276.00ms
+    scripted & quantized & optimized model: 231.11ms
+    lite model: 222.93ms
 
 
 The results running on a Google Colab are:
@@ -406,11 +406,11 @@ model.
  .. code-block:: none
 
     Model Inference Time Reduction
-    0                          original model       341.31ms        0%
-    1                          scripted model       385.95ms   -13.08%
-    2              scripted & quantized model       249.84ms    26.80%
-    3  scripted & quantized & optimized model       208.38ms    38.95%
-    4                              lite model       210.41ms    38.35%
+    0                          original model       372.10ms        0%
+    1                          scripted model       422.44ms   -13.53%
+    2              scripted & quantized model       276.00ms    25.83%
+    3  scripted & quantized & optimized model       231.11ms    37.89%
+    4                              lite model       222.93ms    40.09%
 
 
 Learn More
@@ -423,7 +423,7 @@ Learn More
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  28.033 seconds)
+   **Total running time of the script:** ( 0 minutes  31.862 seconds)
 
 
 .. _sphx_glr_download_beginner_vt_tutorial.py:

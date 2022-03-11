@@ -31,7 +31,7 @@ scikit-image
 # pillow >= 4.2 will throw error when trying to write mode RGBA as JPEG,
 # this is a workaround to the issue.
 # 
-pillow==8.3.2
+pillow==9.0.1
 wget
 gym
 gym-super-mario-bros==7.3.0
